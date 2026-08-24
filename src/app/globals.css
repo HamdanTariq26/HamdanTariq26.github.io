@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+:root {
+  /* Light Academic Engineering Foundation */
+  --color-page: #FFFFFF;
+  --color-page-subtle: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F1F5F9;
+  --color-border: #E2E8F0;
+  --color-border-strong: #CBD5E1;
+
+  /* Section-Level Color Blocking Tokens */
+  --color-section-hero: #EEF4FB;       /* Subtle sophisticated slate-blue opening */
+  --color-section-hero-border: #D8E4F2;
+  --color-section-about: #FFFFFF;      /* Clean neutral break */
+  --color-section-experience: #F8FAFC; /* Subtle cool neutral */
+  --color-section-projects: #EAF0F8;   /* Distinct slate-blue tint */
+  --color-section-contact: #F8FAFC;    /* Refined clean academic closing */
+  --color-section-contact-border: #E2E8F0;
+
+  /* Typography Colors */
+  --color-text-primary: #0F172A;   /* Slate 900 — deep charcoal */
+  --color-text-secondary: #475569; /* Slate 600 — readable body */
+  --color-text-muted: #64748B;     /* Slate 500 — metadata */
+  --color-text-dim: #94A3B8;       /* Slate 400 — minor labels */
+
+  /* Single Restrained Academic Accent */
+  --color-accent: #1D4ED8;         /* Blue 700 — academic navy/blue */
+  --color-accent-hover: #1E40AF;
+  --color-accent-subtle: #EFF6FF;  /* Blue 50 */
+  --color-accent-border: #BFDBFE;  /* Blue 200 */
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Space Grotesk", "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+@theme inline {
+  --color-page: var(--color-page);
+  --color-page-subtle: var(--color-page-subtle);
+  --color-surface: var(--color-surface);
+  --color-surface-muted: var(--color-surface-muted);
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-section-hero: var(--color-section-hero);
+  --color-section-hero-border: var(--color-section-hero-border);
+  --color-section-about: var(--color-section-about);
+  --color-section-experience: var(--color-section-experience);
+  --color-section-projects: var(--color-section-projects);
+  --color-section-projects-border: var(--color-section-projects-border);
+  --color-section-contact: var(--color-section-contact);
+  --color-section-contact-border: var(--color-section-contact-border);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-dim: var(--color-text-dim);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-subtle: var(--color-accent-subtle);
+  --color-accent-border: var(--color-accent-border);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scroll-triggered animations (Smooth & Calmer pacing) ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Elements start hidden; JS adds .is-visible to trigger animation */
+[data-animate] {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+[data-animate="fade-up"].is-visible {
+  animation: fadeInUp 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-animate="fade-in"].is-visible {
+  animation: fadeIn 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-animate="slide-left"].is-visible {
+  animation: slideInLeft 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-animate="slide-right"].is-visible {
+  animation: slideInRight 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stagger delays with relaxed cadence */
+[data-delay="100"] { animation-delay: 0.12s; }
+[data-delay="150"] { animation-delay: 0.18s; }
+[data-delay="200"] { animation-delay: 0.24s; }
+[data-delay="250"] { animation-delay: 0.30s; }
+[data-delay="300"] { animation-delay: 0.36s; }
+[data-delay="350"] { animation-delay: 0.42s; }
+[data-delay="400"] { animation-delay: 0.48s; }
+[data-delay="500"] { animation-delay: 0.60s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-animate] {
+    opacity: 1 !important;
+  }
+}
+
+::selection {
+  background: var(--color-accent-subtle);
+  color: var(--color-accent);
+}
+
+
+
+
+

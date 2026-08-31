@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* Light Academic Engineering Foundation */
+  /* Academic Engineering Core Foundation */
   --color-page: #FFFFFF;
   --color-page-subtle: #F8FAFC;
   --color-surface: #FFFFFF;
@@ -9,23 +9,26 @@
   --color-border: #E2E8F0;
   --color-border-strong: #CBD5E1;
 
-  /* Section-Level Color Blocking Tokens */
-  --color-section-hero: #EEF4FB;       /* Subtle sophisticated slate-blue opening */
-  --color-section-hero-border: #D8E4F2;
-  --color-section-about: #FFFFFF;      /* Clean neutral break */
-  --color-section-experience: #F8FAFC; /* Subtle cool neutral */
-  --color-section-projects: #EAF0F8;   /* Distinct slate-blue tint */
-  --color-section-contact: #F8FAFC;    /* Refined clean academic closing */
-  --color-section-contact-border: #E2E8F0;
+  /* Art-Directed "Visual Chapter" Colors */
+  --color-section-hero: #0E2445;          /* Rich deep sapphire opening field */
+  --color-section-hero-secondary: #173B6C;/* Complementary cobalt field */
+  --color-section-about: #FCFCFD;         /* Clean, warm light neutral chapter */
+  --color-section-experience: #EBF1F7;    /* Distinct cool-slate tinted chapter */
+  --color-section-experience-border: #D1E1F0;
+  --color-section-certifications: #FFFFFF;/* Pure white chapter with structured accents */
+  --color-section-projects: #D4E3F3;      /* Visually strong rich slate-blue chapter */
+  --color-section-projects-border: #BCD4EB;
+  --color-section-contact: #0C1E38;       /* Confident deep sapphire closing chapter */
+  --color-section-contact-border: #1B3864;
 
   /* Typography Colors */
-  --color-text-primary: #0F172A;   /* Slate 900 — deep charcoal */
-  --color-text-secondary: #475569; /* Slate 600 — readable body */
-  --color-text-muted: #64748B;     /* Slate 500 — metadata */
-  --color-text-dim: #94A3B8;       /* Slate 400 — minor labels */
+  --color-text-primary: #0F172A;   /* Slate 900 — deep authoritative charcoal */
+  --color-text-secondary: #334155; /* Slate 700 — rich readable body text */
+  --color-text-muted: #64748B;     /* Slate 500 — metadata & labels */
+  --color-text-dim: #94A3B8;       /* Slate 400 — minor references */
 
   /* Single Restrained Academic Accent */
-  --color-accent: #1D4ED8;         /* Blue 700 — academic navy/blue */
+  --color-accent: #1D4ED8;         /* Blue 700 — deep academic cobalt */
   --color-accent-hover: #1E40AF;
   --color-accent-subtle: #EFF6FF;  /* Blue 50 */
   --color-accent-border: #BFDBFE;  /* Blue 200 */
@@ -43,9 +46,11 @@
   --color-border: var(--color-border);
   --color-border-strong: var(--color-border-strong);
   --color-section-hero: var(--color-section-hero);
-  --color-section-hero-border: var(--color-section-hero-border);
+  --color-section-hero-secondary: var(--color-section-hero-secondary);
   --color-section-about: var(--color-section-about);
   --color-section-experience: var(--color-section-experience);
+  --color-section-experience-border: var(--color-section-experience-border);
+  --color-section-certifications: var(--color-section-certifications);
   --color-section-projects: var(--color-section-projects);
   --color-section-projects-border: var(--color-section-projects-border);
   --color-section-contact: var(--color-section-contact);
@@ -80,76 +85,208 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Scroll-triggered animations (Smooth & Calmer pacing) ── */
-@keyframes fadeInUp {
-  from {
+/* ── Smooth, Relaxed Animation Timing ── */
+
+/* 1. Hero Staggered Sequences */
+@keyframes heroTextReveal {
+  0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
+    filter: blur(4px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes slideInLeft {
-  from {
+@keyframes heroPhotoReveal {
+  0% {
     opacity: 0;
-    transform: translateX(-20px);
+    transform: scale(0.94) translateY(24px);
+    filter: blur(6px);
   }
-  to {
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+.hero-animate-text {
+  animation: heroTextReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.hero-animate-photo {
+  animation: heroPhotoReveal 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s forwards;
+  opacity: 0;
+}
+
+/* 2. Generic Scroll Reveal (Calm, Paced Curve) */
+@keyframes revealUp {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes revealIn {
+  0% {
+    opacity: 0;
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes revealSlideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-28px);
+    filter: blur(3px);
+  }
+  100% {
     opacity: 1;
     transform: translateX(0);
+    filter: blur(0);
   }
 }
 
-@keyframes slideInRight {
-  from {
+@keyframes revealSlideRight {
+  0% {
     opacity: 0;
-    transform: translateX(20px);
+    transform: translateX(28px);
+    filter: blur(3px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateX(0);
+    filter: blur(0);
   }
 }
 
-/* Elements start hidden; JS adds .is-visible to trigger animation */
+@keyframes revealScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.96) translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Elements start hidden; JS adds .is-visible on IntersectionObserver trigger */
 [data-animate] {
   opacity: 0;
-  will-change: opacity, transform;
+  will-change: opacity, transform, filter;
 }
 
 [data-animate="fade-up"].is-visible {
-  animation: fadeInUp 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: revealUp 1.15s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 [data-animate="fade-in"].is-visible {
-  animation: fadeIn 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: revealIn 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 [data-animate="slide-left"].is-visible {
-  animation: slideInLeft 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: revealSlideLeft 1.15s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 [data-animate="slide-right"].is-visible {
-  animation: slideInRight 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: revealSlideRight 1.15s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-/* Stagger delays with relaxed cadence */
-[data-delay="100"] { animation-delay: 0.12s; }
-[data-delay="150"] { animation-delay: 0.18s; }
-[data-delay="200"] { animation-delay: 0.24s; }
-[data-delay="250"] { animation-delay: 0.30s; }
-[data-delay="300"] { animation-delay: 0.36s; }
-[data-delay="350"] { animation-delay: 0.42s; }
-[data-delay="400"] { animation-delay: 0.48s; }
-[data-delay="500"] { animation-delay: 0.60s; }
+[data-animate="scale-up"].is-visible {
+  animation: revealScale 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Relaxed, natural stagger delays */
+[data-delay="75"]  { animation-delay: 0.12s; }
+[data-delay="100"] { animation-delay: 0.16s; }
+[data-delay="150"] { animation-delay: 0.26s; }
+[data-delay="200"] { animation-delay: 0.36s; }
+[data-delay="250"] { animation-delay: 0.46s; }
+[data-delay="300"] { animation-delay: 0.56s; }
+[data-delay="350"] { animation-delay: 0.66s; }
+[data-delay="400"] { animation-delay: 0.76s; }
+[data-delay="500"] { animation-delay: 0.90s; }
+
+/* ── Interactive Nav Link Animated Underline ── */
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  border-radius: 9999px;
+  transform: translateX(-50%);
+  transition: width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
+  opacity: 0;
+}
+
+.nav-link.is-active {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.nav-link.is-active::after {
+  width: 70%;
+  opacity: 1;
+}
+
+.nav-link:hover::after {
+  width: 85%;
+  opacity: 0.7;
+}
+
+/* Card hover lift with relaxed easing */
+.card-hover-lift {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.10), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+}
+
+/* ── Timeline Scroll Node Glow & Interactive Transitions ── */
+.timeline-node {
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.timeline-card {
+  transition: border-color 0.4s ease, transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.timeline-card.is-active {
+  border-color: var(--color-accent);
+  box-shadow: 0 12px 28px -6px rgba(29, 78, 216, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+}
+
+.timeline-node.is-active {
+  background-color: var(--color-accent);
+  border-color: #FFFFFF;
+  transform: scale(1.2);
+  box-shadow: 0 0 0 5px rgba(29, 78, 216, 0.22);
+}
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -163,8 +300,10 @@ body {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  [data-animate] {
+  [data-animate], .hero-animate-text, .hero-animate-photo {
     opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
   }
 }
 
@@ -172,8 +311,3 @@ body {
   background: var(--color-accent-subtle);
   color: var(--color-accent);
 }
-
-
-
-
-

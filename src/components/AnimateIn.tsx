@@ -5,7 +5,7 @@ import { useEffect, useRef, ReactNode, ElementType } from "react";
 interface AnimateInProps {
   children: ReactNode;
   className?: string;
-  animation?: "fade-up" | "fade-in" | "slide-left" | "slide-right";
+  animation?: "fade-up" | "fade-in" | "slide-left" | "slide-right" | "scale-up";
   delay?: number; // ms, must match a data-delay value in globals.css
   threshold?: number;
   as?: ElementType;
@@ -13,7 +13,7 @@ interface AnimateInProps {
 
 /**
  * Wraps children in an element that fades/slides in once it enters the viewport.
- * Uses IntersectionObserver + CSS classes — no external animation library needed.
+ * Uses IntersectionObserver + CSS keyframes with blur-to-sharp smoothing.
  */
 export default function AnimateIn({
   children,

@@ -13,10 +13,10 @@ export const profile = {
 
   role: "AI Undergraduate — NUST, Balochistan Campus",
 
-  headline: "I build intelligent systems that turn AI, computer vision, robotics, and machine learning into real-world autonomous solutions.",
+  headline: "I build intelligent systems that bring AI, computer vision, robotics, and machine learning into the real world.",
 
   intro:
-    "I'm an Artificial Intelligence undergraduate at NUST, Balochistan Campus. I enjoy building practical projects and exploring different areas of AI and engineering, from machine learning and computer vision to robotics and autonomous systems. My work ranges from developing learning models and vision-based applications to building systems that interact with the physical world.",
+    "I'm an Artificial Intelligence undergraduate at NUST, Balochistan Campus, interested in building practical systems across machine learning, computer vision, robotics, and autonomous systems. My work spans learning models, vision-based applications, and intelligent systems that interact with the physical world.",
 
   photo: {
     src: "/images/hamdan-tariq.jpg",

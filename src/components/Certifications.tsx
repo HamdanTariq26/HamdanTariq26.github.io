@@ -1,244 +1,83 @@
-import { certifications, outreachActivities } from "@/data/profile";
-import AnimateIn from "./AnimateIn";
-import { IconExternalLink, IconFileText } from "./icons";
+"use client";
+
+import { certifications } from "@/data/profile";
+import Reveal from "./Reveal";
 
 export default function Certifications() {
-  const hcia = certifications.find((c) => c.id === "hcia-ai");
-  const otherCerts = certifications.filter((c) => c.id !== "hcia-ai");
-
   return (
     <section
       id="certifications"
-      className="scroll-mt-14 border-b border-border bg-section-certifications py-20 lg:py-24"
+      className="px-5 py-20 sm:px-8 lg:px-12 lg:py-28 bg-[hsl(var(--background))]"
     >
-      <div className="mx-auto max-w-5xl px-6">
-        {/* Section Heading */}
-        <AnimateIn animation="fade-up">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-            <div>
-              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-accent/10 border border-accent/20 text-accent font-mono text-[11px] font-semibold uppercase tracking-wider mb-2">
-                Credentials & Accreditation
-              </div>
-              <h2 className="font-[family-name:var(--font-display)] text-2xl font-bold tracking-tight text-text-primary sm:text-3xl">
-                Certifications & Professional Training
-              </h2>
-            </div>
-            <p className="max-w-md text-xs sm:text-sm text-text-secondary">
-              Formal technical certifications and specialized engineering training across artificial intelligence and healthcare control systems.
-            </p>
+      <div className="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-[0.55fr_1.45fr] lg:items-center">
+        <Reveal>
+          <div>
+            <span className="eyebrow">05 / proof of work</span>
+            <h2
+              className="display mt-6 leading-[0.85]"
+              style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)" }}
+            >
+              The details<br />
+              behind the{" "}
+              <em className="text-[#E05470]">signal.</em>
+            </h2>
           </div>
-        </AnimateIn>
+        </Reveal>
 
-        {/* Certifications List */}
-        <div className="mt-10 space-y-6">
-          {/* 1. Formal Certification: Huawei HCIA-AI */}
-          {hcia && (
-            <AnimateIn animation="fade-up" delay={100}>
-              <div className="group relative overflow-hidden rounded-xl border-2 border-accent/35 bg-white p-6 sm:p-8 shadow-xs card-hover-lift hover:border-accent">
-                {/* Blue top accent bar */}
-                <div className="absolute top-0 left-0 right-0 h-1.5 bg-accent" />
-
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2.5">
-                      {/* Document badge */}
-                      <span className="inline-flex items-center gap-1.5 rounded-md border border-accent-border bg-accent-subtle px-2.5 py-0.5 text-xs font-semibold text-accent font-mono">
-                        <IconFileText className="h-3.5 w-3.5" />
-                        <span>{hcia.type}</span>
-                      </span>
-                      {hcia.hours && (
-                        <span className="rounded-md border border-border bg-surface-muted px-2.5 py-0.5 text-xs font-mono text-text-muted">
-                          {hcia.hours}
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="mt-3.5 font-[family-name:var(--font-display)] text-xl font-bold text-text-primary sm:text-2xl transition-colors group-hover:text-accent">
-                      {hcia.title}
-                    </h3>
-
-                    <p className="mt-1 text-sm font-medium text-text-secondary">
-                      {hcia.organization}
-                    </p>
-
-                    {hcia.partner && (
-                      <p className="text-xs text-text-muted mt-0.5">
-                        {hcia.partner}
-                      </p>
-                    )}
-                  </div>
-
-                  <span className="rounded-md border border-border bg-surface-muted px-3 py-1 font-mono text-xs text-text-muted">
-                    {hcia.period}
-                  </span>
-                </div>
-
-                <p className="mt-4 text-sm sm:text-base leading-relaxed text-text-secondary">
-                  {hcia.summary}
-                </p>
-
-                <div className="mt-6 flex flex-col gap-4 border-t border-border pt-4 sm:flex-row sm:items-center sm:justify-between">
-                  {hcia.signatories && (
-                    <div className="text-xs text-text-muted space-y-0.5">
-                      <span className="font-semibold uppercase tracking-wider text-[10px] text-text-dim font-mono">
-                        Instructors:
-                      </span>
-                      <p className="text-text-secondary font-medium">
-                        {hcia.signatories.join(" · ")}
-                      </p>
-                    </div>
+        <Reveal delay="delay-1">
+          <div className="grid gap-4 sm:grid-cols-2">
+            {certifications.map((cert) => (
+              <a
+                key={cert.id}
+                href={cert.fileUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={`card-lift block p-6 transition border border-[hsl(var(--foreground)/0.2)] ${
+                  cert.featured
+                    ? "hover:border-[#E05470]"
+                    : "hover:border-[#F5A623]"
+                }`}
+              >
+                {/* Icon */}
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={cert.featured ? "#E05470" : "#F5A623"}
+                  strokeWidth="1.4"
+                >
+                  {cert.featured ? (
+                    <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
+                  ) : (
+                    <path d="M9 12l2 2 4-4M22 12c0 5.5-4.5 10-10 10S2 17.5 2 12 6.5 2 12 2s10 4.5 10 10z" />
                   )}
+                </svg>
 
-                  <a
-                    href={hcia.fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group/btn inline-flex items-center justify-center gap-1.5 flex-shrink-0 whitespace-nowrap self-start sm:self-auto rounded-lg border border-border bg-page-subtle px-4 py-2 text-xs font-semibold text-text-secondary transition-all duration-200 hover:border-accent-border hover:bg-accent-subtle hover:text-accent hover:shadow-sm active:scale-95"
-                  >
-                    <span>View Certificate PDF</span>
-                    <IconExternalLink className="h-3.5 w-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
-                  </a>
-                </div>
-              </div>
-            </AnimateIn>
-          )}
-
-          {/* 2. Other Certifications (BCI, etc.) */}
-          {otherCerts.map((item, idx) => (
-            <AnimateIn key={item.id} animation="fade-up" delay={200 + idx * 100}>
-              <div className="group relative overflow-hidden rounded-xl border-2 border-accent/35 bg-white p-6 sm:p-8 shadow-xs card-hover-lift hover:border-accent">
-                {/* Blue top accent bar */}
-                <div className="absolute top-0 left-0 right-0 h-1.5 bg-accent" />
-
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2.5">
-                      {/* Document badge */}
-                      <span className="inline-flex items-center gap-1.5 rounded-md border border-accent-border bg-accent-subtle px-2.5 py-0.5 text-xs font-semibold text-accent font-mono">
-                        <IconFileText className="h-3.5 w-3.5" />
-                        <span>{item.type}</span>
-                      </span>
-                      {item.hours && (
-                        <span className="rounded-md border border-border bg-page-subtle px-2.5 py-0.5 text-xs font-mono text-text-muted">
-                          {item.hours}
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="mt-3.5 font-[family-name:var(--font-display)] text-lg font-bold text-text-primary sm:text-xl transition-colors group-hover:text-accent">
-                      {item.title}
-                    </h3>
-
-                    <p className="mt-1 text-sm text-text-secondary font-medium">
-                      {item.organization}
-                    </p>
-
-                    {item.partner && (
-                      <p className="text-xs text-text-muted mt-0.5">
-                        {item.partner}
-                      </p>
-                    )}
-                  </div>
-
-                  <span className="rounded-md border border-border bg-surface-muted px-3 py-1 font-mono text-xs text-text-muted">
-                    {item.period}
-                  </span>
-                </div>
-
-                <p className="mt-4 text-sm sm:text-base leading-relaxed text-text-secondary">
-                  {item.summary}
+                <span
+                  className="eyebrow mt-10 block text-[hsl(var(--muted-foreground))]"
+                >
+                  {cert.type}
+                </span>
+                <h3 className="mt-3 text-xl font-semibold">{cert.id === "hcia-ai" ? "HCIA-AI" : "BCI healthcare control systems"}</h3>
+                <p
+                  className="mt-2 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]"
+                >
+                  {cert.summary.slice(0, 90)}…
                 </p>
 
-                <div className="mt-6 flex flex-col gap-4 border-t border-border pt-4 sm:flex-row sm:items-center sm:justify-between">
-                  {item.referenceId ? (
-                    <div className="text-xs text-text-muted font-mono">
-                      <span>Ref: </span>
-                      <span className="text-text-secondary font-medium">{item.referenceId}</span>
-                    </div>
-                  ) : <div />}
-
-                  <a
-                    href={item.fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group/btn inline-flex items-center justify-center gap-1.5 flex-shrink-0 whitespace-nowrap self-start sm:self-auto rounded-lg border border-border bg-page-subtle px-4 py-2 text-xs font-semibold text-text-secondary transition-all duration-200 hover:border-accent-border hover:bg-accent-subtle hover:text-accent hover:shadow-sm active:scale-95"
-                  >
-                    <span>View Certificate PDF</span>
-                    <IconExternalLink className="h-3.5 w-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
-                  </a>
-                </div>
-              </div>
-            </AnimateIn>
-          ))}
-        </div>
-
-        {/* ── Separate Subsection: Technical Outreach ── */}
-        <div className="mt-16 sm:mt-20 border-t border-border pt-12">
-          <AnimateIn animation="fade-up">
-            <div>
-              <h3 className="font-[family-name:var(--font-display)] text-xl font-bold tracking-tight text-text-primary sm:text-2xl">
-                Technical Outreach & Engagement
-              </h3>
-              <p className="mt-1.5 max-w-2xl text-xs sm:text-sm text-text-secondary">
-                Communicating robotics concepts, engaging school students, and conducting practical engineering demonstrations.
-              </p>
-            </div>
-          </AnimateIn>
-
-          <div className="mt-8">
-            {outreachActivities.map((act) => (
-              <AnimateIn key={act.id} animation="fade-up" delay={150}>
-                <div className="group relative overflow-hidden rounded-xl border-2 border-accent/35 bg-white p-6 sm:p-7 shadow-xs card-hover-lift hover:border-accent">
-                  {/* Blue top accent bar */}
-                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-accent" />
-
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div>
-                      <div className="flex flex-wrap items-center gap-2.5">
-                        {/* Document badge */}
-                        <span className="inline-flex items-center gap-1.5 rounded-md border border-accent-border bg-accent-subtle px-2.5 py-0.5 text-xs font-semibold text-accent font-mono">
-                          <IconFileText className="h-3.5 w-3.5" />
-                          <span>{act.type}</span>
-                        </span>
-                        <span className="rounded-md border border-border bg-page-subtle px-2.5 py-0.5 text-xs font-mono text-text-muted">
-                          {act.location}
-                        </span>
-                      </div>
-
-                      <h4 className="mt-3 font-[family-name:var(--font-display)] text-base font-bold text-text-primary sm:text-lg transition-colors group-hover:text-accent">
-                        {act.title}
-                      </h4>
-
-                      <p className="mt-1 text-xs sm:text-sm text-text-secondary font-medium">
-                        {act.organization} &middot; {act.location}
-                      </p>
-                    </div>
-
-                    <span className="rounded-md border border-border bg-surface-muted px-3 py-1 font-mono text-xs text-text-muted">
-                      {act.period}
-                    </span>
-                  </div>
-
-                  <p className="mt-3.5 text-xs sm:text-sm leading-relaxed text-text-secondary">
-                    {act.summary}
-                  </p>
-
-                  <div className="mt-5 flex items-center justify-end border-t border-border pt-3.5">
-                    <a
-                      href={act.fileUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group/btn inline-flex items-center justify-center gap-1.5 flex-shrink-0 whitespace-nowrap rounded-lg border border-border bg-page-subtle px-4 py-2 text-xs font-semibold text-text-secondary transition-all duration-200 hover:border-accent-border hover:bg-accent-subtle hover:text-accent hover:shadow-sm active:scale-95"
-                    >
-                      <span>View Certificate PDF</span>
-                      <IconExternalLink className="h-3.5 w-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
-                    </a>
-                  </div>
-                </div>
-              </AnimateIn>
+                <span
+                  className={`mt-4 inline-flex items-center gap-1 text-xs font-semibold ${
+                    cert.featured ? "text-[#E05470]" : "text-[#F5A623]"
+                  }`}
+                >
+                  View certificate PDF
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
+                </span>
+              </a>
             ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

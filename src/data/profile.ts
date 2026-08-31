@@ -24,15 +24,20 @@ export const profile = {
     caption: "Hamdan Tariq",
   },
 
-  about: [
-    "I’m an Artificial Intelligence undergraduate at NUST, Balochistan Campus, passionate about building intelligent systems that can **perceive, learn, reason, and act**. My interests span artificial intelligence, machine learning, computer vision, robotics, and autonomous systems, with a strong focus on turning ideas into practical, working solutions.",
-
-    "I learn best by building. Through my projects, I’ve worked with machine learning and deep learning models, computer vision, medical imaging, object detection, gesture recognition, and other perception-based systems. I enjoy going beyond simply training a model and exploring how AI can be integrated into complete systems that solve real problems.",
-
-    "My work also extends into robotics and autonomy, where I’ve explored robotic control, embedded sensing, visual SLAM, 3D mapping, navigation, and drone-based systems. These experiences have helped me understand how perception, intelligence, and physical systems come together to create machines capable of operating and making decisions in the real world.",
-
-    "I’m constantly looking to expand my skills through challenging projects and experimentation. Whether I’m developing an AI model, solving a computer vision problem, building a robotic system, or working toward autonomous behavior, my goal is the same: **to build intelligent systems that are useful, capable, and increasingly autonomous.**",
-  ],
+  about: {
+    intro:
+      "I'm an Artificial Intelligence undergraduate at NUST, Balochistan Campus, focused on building intelligent systems that can perceive, learn, reason, and act.",
+    interests: [
+      "Artificial Intelligence & Machine Learning",
+      "Computer Vision & Deep Learning",
+      "Robotics & Autonomous Systems",
+      "Medical Imaging & Object Detection",
+      "Visual SLAM, Mapping & Navigation",
+      "Drone-based and perception-driven systems",
+    ],
+    closing:
+      "I learn best by building, experimenting, and turning ideas into working systems. My goal is to develop practical, capable, and increasingly autonomous intelligent systems that can solve real-world problems.",
+  },
 } as const;
 
 

@@ -2,309 +2,199 @@
 
 import { useState, FormEvent } from "react";
 import { profile } from "@/data/profile";
-import {
-  IconMail,
-  IconGithub,
-  IconLinkedin,
-  IconFileText,
-  IconMapPin,
-  IconSend,
-  IconExternalLink,
-} from "./icons";
-import AnimateIn from "./AnimateIn";
+import Reveal from "./Reveal";
 
 export default function Footer() {
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [form, setForm] = useState({ name: "", subject: "", message: "" });
 
-  const handleSubmit = (e: FormEvent) => {
+  const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { name, subject, message } = formState;
+    const subject = encodeURIComponent(form.subject || "Project conversation");
+    const body = encodeURIComponent(`From: ${form.name}\n\n${form.message}`);
+    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
 
-    const mailtoSubject = encodeURIComponent(
-      subject || (name ? `Inquiry from ${name}` : "Portfolio Inquiry")
-    );
-    const mailtoBody = encodeURIComponent(
-      name ? `${message}\n\nBest regards,\n${name}` : message
-    );
-
-    window.location.href = `mailto:${profile.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
-    setSubmitted(true);
-
-    setTimeout(() => {
-      setSubmitted(false);
-    }, 4000);
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard?.writeText(profile.email);
+    } finally {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    }
   };
 
   return (
-    <footer
-      id="contact"
-      className="relative scroll-mt-14 overflow-hidden pt-20 pb-16 lg:pt-24 lg:pb-20 text-white"
-      style={{
-        background: "linear-gradient(135deg, #0A1B35 0%, #122F5A 50%, #18427C 100%)",
-      }}
-    >
-      {/* ── Large Ambient Blur Shapes for Deep Visual Depth ── */}
-      <div
-        aria-hidden="true"
-        className="absolute top-[-20%] right-[-10%] h-[500px] w-[500px] rounded-full bg-blue-500/15 blur-3xl pointer-events-none"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute bottom-[-15%] left-[-10%] h-[400px] w-[400px] rounded-full bg-indigo-500/15 blur-3xl pointer-events-none"
-      />
-
-      <div className="relative z-10 mx-auto max-w-5xl px-6">
-        {/* Section Heading */}
-        <AnimateIn animation="fade-up">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 font-mono text-xs font-medium uppercase tracking-wider mb-3">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-                <span>Get In Touch</span>
-              </div>
-              <h2 className="font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Let&apos;s Connect
-              </h2>
+    <>
+      <section
+        id="contact"
+        className="scroll-mt-16 dark-panel px-5 py-24 sm:px-8 lg:px-12 lg:py-36"
+      >
+        <div className="mx-auto max-w-[1200px]">
+          <Reveal>
+            <div className="flex items-center justify-between">
+              <span className="eyebrow text-[#F5A623]">06 / open channel</span>
+              <span className="mono text-[10px] text-[hsl(var(--background)/0.43)]">
+                RESPONSE TIME: 1–3 DAYS
+              </span>
             </div>
-            <p className="max-w-md text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Open to robotics research collaborations, autonomous systems engineering roles, and perception/AI initiatives.
-            </p>
-          </div>
-        </AnimateIn>
+          </Reveal>
 
-        {/* Contact Layout: Classic Form + All Socials Sidebar */}
-        <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
-          {/* ── Left Column (7 cols): Classic Contact Form ── */}
-          <AnimateIn animation="fade-up" delay={100} className="lg:col-span-7">
-            <div className="rounded-2xl border border-white/20 bg-slate-900/80 p-6 sm:p-8 shadow-2xl backdrop-blur-md">
-              <h3 className="font-[family-name:var(--font-display)] text-lg font-bold text-white">
-                Send a Direct Message
-              </h3>
-              <p className="mt-1 text-xs text-slate-400">
-                Fill out the fields below to initiate communication directly via email.
-              </p>
+          <div className="mt-14 grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-28">
+            {/* Left: headline + contact info */}
+            <Reveal>
+              <div>
+                <h2
+                  className="display leading-[0.78] text-[hsl(var(--background))]"
+                  style={{
+                    fontSize: "clamp(3.5rem, 8vw, 8rem)",
+                  }}
+                >
+                  Have a hard<br />
+                  <em className="text-[#F5A623]">problem?</em>
+                </h2>
+                <p
+                  className="mt-10 max-w-[430px] text-lg leading-relaxed text-[hsl(var(--background)/0.65)]"
+                >
+                  I'm interested in research conversations, thoughtful engineering teams, and projects where the system has to work beyond the demo.
+                </p>
 
-              <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-[11px] font-mono font-medium text-slate-300 uppercase tracking-wider"
-                    >
-                      Your Name <span className="text-blue-400">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      required
-                      placeholder="e.g. Dr. Jane Smith"
-                      value={formState.name}
-                      onChange={(e) =>
-                        setFormState({ ...formState, name: e.target.value })
-                      }
-                      className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-800/85 px-3.5 py-2.5 text-sm text-white placeholder-slate-400 transition-all duration-200 focus:border-blue-400 focus:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-400"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-[11px] font-mono font-medium text-slate-300 uppercase tracking-wider"
-                    >
-                      Your Email <span className="text-blue-400">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      required
-                      placeholder="name@institution.edu"
-                      value={formState.email}
-                      onChange={(e) =>
-                        setFormState({ ...formState, email: e.target.value })
-                      }
-                      className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-800/85 px-3.5 py-2.5 text-sm text-white placeholder-slate-400 transition-all duration-200 focus:border-blue-400 focus:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-400"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-[11px] font-mono font-medium text-slate-300 uppercase tracking-wider"
-                  >
-                    Subject <span className="text-blue-400">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    required
-                    placeholder="e.g. Robotics Collaboration / Research Inquiry"
-                    value={formState.subject}
-                    onChange={(e) =>
-                      setFormState({ ...formState, subject: e.target.value })
-                    }
-                    className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-800/85 px-3.5 py-2.5 text-sm text-white placeholder-slate-400 transition-all duration-200 focus:border-blue-400 focus:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-400"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-[11px] font-mono font-medium text-slate-300 uppercase tracking-wider"
-                  >
-                    Message <span className="text-blue-400">*</span>
-                  </label>
-                  <textarea
-                    id="message"
-                    required
-                    rows={4}
-                    placeholder="Details about the research topic, engineering problem, or collaboration..."
-                    value={formState.message}
-                    onChange={(e) =>
-                      setFormState({ ...formState, message: e.target.value })
-                    }
-                    className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-800/85 px-3.5 py-2.5 text-sm text-white placeholder-slate-400 transition-all duration-200 focus:border-blue-400 focus:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-400 resize-y"
-                  />
-                </div>
-
-                <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
+                <div className="mt-10 space-y-5">
+                  {/* Email copy */}
                   <button
-                    type="submit"
-                    className="group inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-md shadow-blue-950/40 transition-all duration-200 hover:bg-blue-500 hover:shadow-xl hover:shadow-blue-900/50 hover:-translate-y-0.5 active:scale-95"
+                    onClick={copyEmail}
+                    className="group flex items-center gap-3 text-sm transition text-[hsl(var(--background))] hover:text-[#F5A623]"
                   >
-                    <span>Send Message</span>
-                    <IconSend className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    {copied ? "Copied to clipboard" : profile.email}
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-50"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
                   </button>
 
-                  {submitted && (
-                    <span className="text-xs text-blue-300 font-medium animate-fade-in">
-                      ✓ Preparing message in your email client...
-                    </span>
-                  )}
-                </div>
-              </form>
-            </div>
-          </AnimateIn>
-
-          {/* ── Right Column (5 cols): Socials & Direct Contact Info ── */}
-          <AnimateIn animation="fade-up" delay={200} className="lg:col-span-5">
-            <div className="space-y-6">
-              {/* Direct Info Card */}
-              <div className="rounded-2xl border border-white/20 bg-slate-900/80 p-6 sm:p-7 shadow-2xl backdrop-blur-md space-y-5">
-                <h3 className="font-semibold text-blue-300 uppercase tracking-wider text-[11px] font-mono">
-                  Direct Contact
-                </h3>
-
-                <div className="space-y-4 text-xs">
-                  {/* Email */}
-                  <div className="flex items-start gap-3">
-                    <div className="rounded-md border border-blue-500/30 bg-blue-500/15 p-2 text-blue-400 flex-shrink-0">
-                      <IconMail className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
-                        Email Address
-                      </span>
-                      <a
-                        href={`mailto:${profile.email}`}
-                        className="font-medium text-white hover:text-blue-300 transition-colors break-all"
-                      >
-                        {profile.email}
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* Location */}
-                  <div className="flex items-start gap-3">
-                    <div className="rounded-md border border-blue-500/30 bg-blue-500/15 p-2 text-blue-400 flex-shrink-0">
-                      <IconMapPin className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
-                        Location
-                      </span>
-                      <p className="font-medium text-white">
-                        {profile.location}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Profiles & Documents */}
-                <div className="border-t border-slate-800 pt-5 space-y-3">
-                  <h4 className="font-semibold text-blue-300 uppercase tracking-wider text-[11px] font-mono">
-                    Profiles & Documents
-                  </h4>
-
-                  <div className="space-y-2">
-                    {/* LinkedIn */}
-                    <a
-                      href={profile.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-center justify-between rounded-lg border border-slate-800 bg-slate-800/60 px-3.5 py-2.5 transition-all duration-200 hover:border-blue-400/40 hover:bg-slate-800 hover:-translate-y-0.5"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <IconLinkedin className="h-4 w-4 text-slate-400 transition-colors group-hover:text-blue-300" />
-                        <span className="font-medium text-slate-200 group-hover:text-white">
-                          LinkedIn Profile
-                        </span>
-                      </div>
-                      <IconExternalLink className="h-3.5 w-3.5 text-slate-500 transition-transform group-hover:text-blue-300 group-hover:translate-x-0.5" />
-                    </a>
-
-                    {/* GitHub */}
+                  {/* Social links */}
+                  <div className="flex flex-wrap items-center gap-5">
                     <a
                       href={profile.github}
                       target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-center justify-between rounded-lg border border-slate-800 bg-slate-800/60 px-3.5 py-2.5 transition-all duration-200 hover:border-blue-400/40 hover:bg-slate-800 hover:-translate-y-0.5"
+                      rel="noreferrer"
+                      className="flex items-center gap-2 text-sm transition text-[hsl(var(--background)/0.68)] hover:text-[#F5A623]"
                     >
-                      <div className="flex items-center gap-2.5">
-                        <IconGithub className="h-4 w-4 text-slate-400 transition-colors group-hover:text-blue-300" />
-                        <span className="font-medium text-slate-200 group-hover:text-white">
-                          GitHub Repositories
-                        </span>
-                      </div>
-                      <IconExternalLink className="h-3.5 w-3.5 text-slate-500 transition-transform group-hover:text-blue-300 group-hover:translate-x-0.5" />
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                      GitHub
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-50"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
                     </a>
-
-                    {/* CV */}
                     <a
-                      href={profile.cv}
+                      href={profile.linkedin}
                       target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-center justify-between rounded-lg border border-slate-800 bg-slate-800/60 px-3.5 py-2.5 transition-all duration-200 hover:border-blue-400/40 hover:bg-slate-800 hover:-translate-y-0.5"
+                      rel="noreferrer"
+                      className="flex items-center gap-2 text-sm transition text-[hsl(var(--background)/0.68)] hover:text-[#F5A623]"
                     >
-                      <div className="flex items-center gap-2.5">
-                        <IconFileText className="h-4 w-4 text-slate-400 transition-colors group-hover:text-blue-300" />
-                        <span className="font-medium text-slate-200 group-hover:text-white">
-                          Curriculum Vitae (PDF)
-                        </span>
-                      </div>
-                      <IconExternalLink className="h-3.5 w-3.5 text-slate-500 transition-transform group-hover:text-blue-300 group-hover:translate-x-0.5" />
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                      LinkedIn
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-50"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
                     </a>
                   </div>
                 </div>
               </div>
-            </div>
-          </AnimateIn>
-        </div>
+            </Reveal>
 
-        {/* Bottom Academic Metadata */}
-        <AnimateIn animation="fade-in" delay={300}>
-          <div className="mt-16 flex flex-col items-center justify-between gap-3 border-t border-slate-800/80 pt-6 text-xs text-slate-400 sm:flex-row font-mono">
-            <span>&copy; {new Date().getFullYear()} {profile.name}</span>
-            <span>BS Artificial Intelligence &middot; NUST, Balochistan Campus &middot; Quetta, PK</span>
+            {/* Right: contact form */}
+            <Reveal delay="delay-1">
+              <form
+                onSubmit={submit}
+                className="p-6 sm:p-8 border border-[hsl(var(--background)/0.24)] bg-[hsl(var(--background)/0.05)]"
+              >
+                <div className="mb-8 flex items-center justify-between">
+                  <span className="eyebrow text-[hsl(var(--background)/0.55)]">New message</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="1.8">
+                    <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+                  </svg>
+                </div>
+
+                {/* Name */}
+                <label className="block">
+                  <span className="mono text-[10px] uppercase tracking-[.12em] text-[hsl(var(--background)/0.55)]">
+                    Your name
+                  </span>
+                  <input
+                    required
+                    type="text"
+                    placeholder="How should I address you?"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className="mt-3 w-full bg-transparent px-0 py-3 text-sm outline-none border-b border-[hsl(var(--background)/0.25)] text-[hsl(var(--background))] focus:border-[#F5A623]"
+                  />
+                </label>
+
+                {/* Subject */}
+                <label className="mt-7 block">
+                  <span className="mono text-[10px] uppercase tracking-[.12em] text-[hsl(var(--background)/0.55)]">
+                    Subject
+                  </span>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Research, role, collaboration…"
+                    value={form.subject}
+                    onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                    className="mt-3 w-full bg-transparent px-0 py-3 text-sm outline-none border-b border-[hsl(var(--background)/0.25)] text-[hsl(var(--background))] focus:border-[#F5A623]"
+                  />
+                </label>
+
+                {/* Message */}
+                <label className="mt-7 block">
+                  <span className="mono text-[10px] uppercase tracking-[.12em] text-[hsl(var(--background)/0.55)]">
+                    Message
+                  </span>
+                  <textarea
+                    required
+                    rows={4}
+                    placeholder="Give me the useful context…"
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    className="mt-3 w-full resize-none bg-transparent px-0 py-3 text-sm outline-none border-b border-[hsl(var(--background)/0.25)] text-[hsl(var(--background))] focus:border-[#F5A623]"
+                  />
+                </label>
+
+                <button
+                  type="submit"
+                  className="button-sheen mt-9 flex items-center gap-3 px-5 py-3.5 text-sm font-semibold transition hover:-translate-y-0.5 bg-[#F5A623] text-[#182C30]"
+                >
+                  {sent ? (
+                    <>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span className="relative z-10">Draft opened</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="relative z-10">Send message</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="relative z-10"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </>
+                  )}
+                </button>
+              </form>
+            </Reveal>
           </div>
-        </AnimateIn>
-      </div>
-    </footer>
+        </div>
+      </section>
+
+      {/* Footer bar */}
+      <footer
+        className="dark-panel px-5 py-7 sm:px-8 lg:px-12 border-t border-[hsl(var(--background)/0.15)]"
+      >
+        <div className="mx-auto flex max-w-[1200px] flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <span className="mono text-[10px] text-[hsl(var(--background)/0.45)]">
+            © 2026 {profile.name} / built from first principles
+          </span>
+          <div className="mono flex items-center gap-2 text-[10px] text-[hsl(var(--background)/0.45)]">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Quetta, Pakistan
+            <span className="mx-2">·</span>
+            <span className="text-[#F5A623]">available for a good problem</span>
+          </div>
+        </div>
+      </footer>
+    </>
   );
 }

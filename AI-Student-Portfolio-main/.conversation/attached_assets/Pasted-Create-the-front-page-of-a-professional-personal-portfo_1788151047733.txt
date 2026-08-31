@@ -1,0 +1,25 @@
+Create the **front page of a professional personal portfolio website** for an undergraduate Artificial Intelligence student.
+
+The portfolio will be viewed by **professors, researchers, recruiters, software/AI companies, collaborators, and other technical professionals**, so the website should feel polished, credible, modern, and high-quality rather than like a generic student template.
+
+The person behind the portfolio is an **Artificial Intelligence undergraduate at NUST (Balochistan Campus)** with a strong interest in building practical intelligent systems. His areas of interest include:
+
+* Artificial Intelligence
+* Machine Learning
+* Computer Vision
+* Robotics
+* Autonomous Systems
+
+The homepage should immediately communicate **who he is, what he does, what he is interested in, and why his work is worth exploring**.
+
+Design and structure the page with strong visual hierarchy and excellent UX. The hero section should contain his name, a concise professional introduction, and clear calls to action leading visitors toward his projects, about section, or contact information.
+
+The page should make his technical identity and engineering mindset clear without becoming overloaded with information. It should feel like the portfolio of someone who is **serious about AI, enjoys building real systems, and is progressing toward professional and research-oriented work**.
+
+Use concise, professional copy and avoid exaggerated claims, unnecessary buzzwords, cliché phrases, or overly decorative elements.
+
+The homepage should also include enough supporting content to give visitors a quick understanding of his work and interests while encouraging them to explore the rest of the portfolio.
+
+Make the implementation **fully responsive**, accessible, fast, and production-quality. Pay attention to spacing, typography, component consistency, interactions, responsive behavior, and overall polish.
+
+The final result should feel **distinctive, professional, technically credible, and suitable for an AI student's professional portfolio**, rather than resembling a generic portfolio template.

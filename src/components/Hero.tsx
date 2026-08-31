@@ -1,195 +1,206 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { profile } from "@/data/profile";
-import { IconGithub, IconLinkedin, IconMail, IconFileText, IconArrowRight } from "./icons";
+import Reveal from "./Reveal";
 
-export default function Hero() {
-  const [scrollY, setScrollY] = useState(0);
+function scrollToId(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+}
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+/** SVG orbit/perception diagram — right side of hero */
+function OrbitGraphic() {
   return (
-    <section
-      id="home"
-      className="relative scroll-mt-14 overflow-hidden pt-20 pb-14 sm:pt-28 sm:pb-20 lg:pt-32 lg:pb-24 text-white"
-      style={{
-        background: "linear-gradient(135deg, #0D2242 0%, #143767 50%, #1A4988 100%)",
-      }}
+    <div
+      className="relative mx-auto aspect-square w-full max-w-[480px] overflow-hidden p-5 sm:p-8 border border-[hsl(var(--background)/0.2)] bg-[#1c373d] text-[hsl(var(--background))]"
     >
-      {/* ── Large Abstract Soft Ambient Shapes with Subtle Scroll Parallax ── */}
+      {/* Scanline sweep */}
+      <div className="scanline pointer-events-none absolute inset-0" />
+      {/* Inner border */}
       <div
-        aria-hidden="true"
-        className="absolute -top-32 -right-32 h-[540px] w-[540px] rounded-full bg-blue-500/15 blur-3xl pointer-events-none transition-transform duration-100 ease-out"
-        style={{ transform: `translate3d(0, ${scrollY * 0.1}px, 0)` }}
-      />
-      <div
-        aria-hidden="true"
-        className="absolute -bottom-24 -left-24 h-[440px] w-[440px] rounded-full bg-indigo-500/15 blur-3xl pointer-events-none transition-transform duration-100 ease-out"
-        style={{ transform: `translate3d(0, ${-scrollY * 0.07}px, 0)` }}
+        className="absolute inset-5 sm:inset-8 border border-[hsl(var(--background)/0.14)]"
       />
 
-      <div className="relative z-10 mx-auto max-w-5xl px-6">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.15fr_260px] lg:gap-16">
+      <div className="relative flex h-full flex-col justify-between">
+        {/* Top labels */}
+        <div className="flex items-start justify-between">
+          <span className="eyebrow text-[#F5A623]">
+            field log / 26.01
+          </span>
+          <span className="mono flex items-center gap-2 text-[10px] text-[hsl(var(--background)/0.54)]">
+            <span
+              className="h-3 w-3 rounded-full bg-[#F5A623] inline-block"
+            />
+            Quetta / PK
+          </span>
+        </div>
 
-          {/* ── Left: Strong Typographic Sequence on Initial Load ── */}
-          <div className="space-y-0">
-            {/* 1. Eyebrow badge */}
-            <div
-              className="hero-animate-text inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-3.5 py-1 text-xs font-mono font-medium text-blue-200 backdrop-blur-sm shadow-xs"
-              style={{ animationDelay: "0.1s" }}
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
-              <span>{profile.eyebrow}</span>
-            </div>
-
-            {/* 2. Name */}
-            <h1
-              className="hero-animate-text mt-5 font-[family-name:var(--font-display)] text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl drop-shadow-sm"
-              style={{ animationDelay: "0.28s" }}
-            >
-              {profile.name}
-            </h1>
-
-            {/* 3. Headline */}
-            <p
-              className="hero-animate-text mt-5 text-lg leading-relaxed text-blue-100/95 sm:text-xl font-medium max-w-xl"
-              style={{ animationDelay: "0.46s" }}
-            >
-              {profile.headline}
-            </p>
-
-            {/* 4. Short introduction */}
-            <p
-              className="hero-animate-text mt-4 max-w-lg text-sm sm:text-base leading-relaxed text-slate-300 font-normal"
-              style={{ animationDelay: "0.64s" }}
-            >
-              {profile.intro}
-            </p>
-
-            {/* 5. Dedicated Action Buttons */}
-            <div
-              className="hero-animate-text mt-8 flex flex-wrap items-center gap-3.5"
-              style={{ animationDelay: "0.82s" }}
-            >
-              <a
-                href={profile.cv}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-blue-950/40 transition-all duration-300 hover:bg-blue-500 hover:shadow-xl hover:shadow-blue-900/50 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
-                aria-label="View CV (PDF)"
-              >
-                <IconFileText className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
-                <span>View CV</span>
-              </a>
-
-              <a
-                href="#projects"
-                className="group inline-flex items-center gap-1.5 rounded-lg border border-white/25 bg-white/10 px-4 py-2.5 text-xs sm:text-sm font-medium text-white backdrop-blur-sm transition-all duration-300 hover:border-white/50 hover:bg-white/20 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
-              >
-                <span>Selected Projects</span>
-                <IconArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
-            </div>
-
-            {/* 6. Understated social & contact links */}
-            <div
-              className="hero-animate-text mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-300"
-              style={{ animationDelay: "0.98s" }}
-            >
-              <a
-                href={profile.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 hover:text-white transition-all duration-300 hover:-translate-y-0.5 font-medium"
-                aria-label="GitHub"
-              >
-                <IconGithub className="h-4 w-4 text-blue-300" />
-                <span>GitHub</span>
-              </a>
-
-              <span className="text-white/25" aria-hidden>·</span>
-
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 hover:text-white transition-all duration-300 hover:-translate-y-0.5 font-medium"
-                aria-label="LinkedIn"
-              >
-                <IconLinkedin className="h-4 w-4 text-blue-300" />
-                <span>LinkedIn</span>
-              </a>
-
-              <span className="text-white/25" aria-hidden>·</span>
-
-              <a
-                href={`mailto:${profile.email}`}
-                className="inline-flex items-center gap-1.5 hover:text-white transition-all duration-300 hover:-translate-y-0.5 font-medium"
-                aria-label="Email"
-              >
-                <IconMail className="h-4 w-4 text-blue-300" />
-                <span>Email</span>
-              </a>
-            </div>
-          </div>
-
-          {/* ── Right: Simple, Elegant & Human Portrait Card ── */}
+        {/* Orbit circles */}
+        <div
+          className="relative mx-auto my-6 grid aspect-square w-[62%] place-items-center rounded-full border border-[hsl(var(--background)/0.25)]"
+        >
           <div
-            className="hero-animate-photo flex justify-center lg:justify-end"
-            style={{
-              transform: `translate3d(0, ${-scrollY * 0.03}px, 0)`,
-            }}
+            className="absolute inset-[12%] rounded-full border border-dashed border-[#F5A623]/75"
+          />
+          <div
+            className="absolute inset-[29%] rounded-full border border-[hsl(var(--background)/0.2)]"
+          />
+          <div
+            className="absolute inset-[41%] rounded-full bg-[#F5A623] shadow-[0_0_0_18px_rgba(245,166,35,0.09)]"
+          />
+          {/* Cross lines */}
+          <div
+            className="absolute h-px w-[150%] -rotate-[28deg] bg-[#E05470]"
+          />
+          <div
+            className="absolute h-[150%] w-px rotate-[28deg] bg-[hsl(var(--background)/0.15)]"
+          />
+          {/* Brain icon (SVG inline) */}
+          <svg
+            className="relative z-10 h-8 w-8 text-[hsl(var(--background))]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.25"
           >
-            <figure className="relative w-full max-w-[220px] sm:max-w-[235px] lg:max-w-[245px] group">
-              {/* Subtle ambient soft blue depth behind the portrait */}
-              <div
-                aria-hidden="true"
-                className="absolute -inset-2 rounded-3xl bg-blue-400/10 blur-xl pointer-events-none"
-              />
+            <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
+            <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
+          </svg>
+          <span
+            className="absolute -right-6 top-[16%] h-2 w-2 rounded-full bg-[#E05470]"
+          />
+          <span
+            className="absolute -bottom-2 left-[19%] h-2 w-2 rounded-full bg-[#F5A623]"
+          />
+        </div>
 
-              {/* Single clean rounded portrait container */}
-              <div className="relative overflow-hidden rounded-2xl border border-white/25 bg-slate-900/40 p-1.5 shadow-2xl shadow-slate-950/40 backdrop-blur-xs transition-all duration-500 group-hover:border-white/40 group-hover:-translate-y-1">
-                <Image
-                  src={profile.photo.src}
-                  alt={profile.photo.alt}
-                  width={560}
-                  height={700}
-                  priority
-                  className="aspect-[4/5] w-full rounded-xl object-cover transition-transform duration-500 group-hover:scale-[1.015]"
-                />
+        {/* Bottom data row */}
+        <div
+          className="grid grid-cols-3 gap-2 pt-4 border-t border-[hsl(var(--background)/0.18)]"
+        >
+          {[["INPUT", "stereo + IMU"], ["MODEL", "ORB-SLAM3"], ["OUTPUT", "map / act"]].map(
+            ([label, value]) => (
+              <div key={label}>
+                <p
+                  className="mono text-[8px] tracking-[0.11em] text-[hsl(var(--background)/0.45)]"
+                >
+                  {label}
+                </p>
+                <p className="mt-1 text-[11px] text-[hsl(var(--background))]">
+                  {value}
+                </p>
               </div>
-
-              {/* Clean sans-serif name & affiliation caption */}
-              <figcaption className="mt-3.5 text-center">
-                <p className="font-sans font-semibold text-sm text-white tracking-normal">
-                  {profile.name}
-                </p>
-                <p className="font-sans text-xs text-blue-200/80 mt-0.5">
-                  Artificial Intelligence · NUST
-                </p>
-              </figcaption>
-            </figure>
-          </div>
-
+            )
+          )}
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* ── Bottom Organic Architectural Curve into About ── */}
-      <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none pointer-events-none">
-        <svg
-          viewBox="0 0 1440 40"
-          className="relative block w-full h-8 sm:h-10 text-section-about fill-current"
-          preserveAspectRatio="none"
-        >
-          <path d="M0,0 C480,40 960,40 1440,0 L1440,40 L0,40 Z" />
+export default function Hero() {
+  return (
+    <section
+      id="top"
+      className="dark-panel grid-texture relative flex min-h-[760px] items-center overflow-hidden pt-[72px]"
+    >
+      {/* Decorative rings */}
+      <div
+        className="pointer-events-none absolute -right-32 top-28 h-[430px] w-[430px] rounded-full border border-[#F5A623]/15"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -right-10 top-44 h-[270px] w-[270px] rounded-full border border-dashed border-[#E05470]/30"
+        aria-hidden
+      />
+
+      <div className="mx-auto grid w-full max-w-[1200px] gap-14 px-5 py-20 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:py-24">
+        <div className="relative z-10">
+          {/* Eyebrow */}
+          <Reveal>
+            <div className="eyebrow mb-8 flex items-center gap-3 text-[#F5A623]">
+              <span className="h-px w-8 bg-[#F5A623]" />
+              AI undergraduate / NUST Balochistan
+            </div>
+          </Reveal>
+
+          {/* Display heading */}
+          <Reveal delay="delay-1">
+            <h1
+              className="display max-w-[820px] leading-[0.82] text-[hsl(var(--background))]"
+              style={{
+                fontSize: "clamp(3.8rem, 9vw, 8.5rem)",
+              }}
+            >
+              Systems<br />
+              <em className="text-[#F5A623]">that sense.</em>
+            </h1>
+          </Reveal>
+
+          {/* Intro */}
+          <Reveal delay="delay-2">
+            <p
+              className="mt-10 max-w-[540px] text-lg leading-relaxed sm:text-xl text-[hsl(var(--background)/0.68)]"
+            >
+              I build intelligent systems that bring AI, computer vision, robotics, and machine learning into the real world.
+            </p>
+          </Reveal>
+
+          {/* CTAs */}
+          <Reveal delay="delay-3">
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <button
+                onClick={() => scrollToId("work")}
+                className="button-sheen group flex items-center gap-4 px-5 py-3.5 text-sm font-semibold transition hover:-translate-y-0.5 bg-[#F5A623] text-[#182C30]"
+              >
+                See the work
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="transition group-hover:translate-y-1">
+                  <path d="M12 5v14M5 12l7 7 7-7" />
+                </svg>
+              </button>
+              <a
+                href="/cv.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 px-2 py-3 text-sm transition text-[hsl(var(--background)/0.72)] hover:text-[#F5A623]"
+              >
+                Download CV
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
+              </a>
+            </div>
+          </Reveal>
+
+          {/* Metadata */}
+          <Reveal delay="delay-4">
+            <div
+              className="mt-16 flex flex-wrap gap-x-8 gap-y-3 pt-4 border-t border-[hsl(var(--background)/0.18)]"
+            >
+              <span className="mono text-[9px] text-[hsl(var(--background)/0.5)]">
+                BASED IN{" "}
+                <b className="font-normal text-[hsl(var(--background))]">QUETTA, PK</b>
+              </span>
+              <span className="mono text-[9px] text-[hsl(var(--background)/0.5)]">
+                FOCUS{" "}
+                <b className="font-normal text-[hsl(var(--background))]">VISION × AUTONOMY</b>
+              </span>
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Orbit diagram */}
+        <Reveal delay="delay-2" className="lg:justify-self-end">
+          <OrbitGraphic />
+        </Reveal>
+      </div>
+
+      {/* Scroll hint */}
+      <div
+        className="absolute bottom-8 right-8 hidden items-center gap-3 lg:flex"
+        aria-hidden
+      >
+        <span className="mono text-[9px] tracking-[0.18em] text-[hsl(var(--background)/0.42)]">
+          SCROLL TO EXPLORE
+        </span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="2">
+          <path d="M12 5v14M5 12l7 7 7-7" />
         </svg>
       </div>
     </section>

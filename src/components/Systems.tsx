@@ -35,7 +35,7 @@ const capabilities = [
   },
 ];
 
-const tools = ["Python", "C++", "PyTorch", "OpenCV", "ROS2", "Qt", "Linux", "Git", "ORB-SLAM3", "Arduino"];
+const tools = ["Python", "C++", "PyTorch", "TensorFlow", "OpenCV", "ROS2", "Qt", "Linux", "Git", "ORB-SLAM3", "Arduino"];
 
 export default function Systems() {
   return (

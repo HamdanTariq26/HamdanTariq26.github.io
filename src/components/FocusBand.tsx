@@ -1,10 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { focusItems, type FocusItem } from "@/data/profile";
 import Reveal from "./Reveal";
 
 type Category = "all" | "vision" | "robotics" | "ml" | "systems";
+
+const idMap: Record<string, string> = {
+  "Autonomous Drone": "autonomous-drone",
+  "Conditional Multimodal MRI Synthesis & Brain Tumor Segmentation": "mri-synthesis",
+  "Gesture-Controlled Drone": "gesture-drone",
+  "Gesture-Controlled Robotic Hand": "robotic-hand",
+  "Animal Detection System": "animal-detection",
+  "Chat-Me": "chat-me",
+};
 
 const categoryMap: Record<string, Category> = {
   "Autonomous Drone": "robotics",
@@ -91,10 +101,11 @@ function ProjectArt({ category }: { category: Category }) {
   );
 }
 
-function ProjectCard({ item, onOpen }: { item: FocusItem; onOpen: (item: FocusItem) => void }) {
+function ProjectCard({ item }: { item: FocusItem }) {
   const accent = accentMap[item.label] ?? "gold";
   const accentClass = accent === "gold" ? "bg-[#F5A623]" : accent === "rose" ? "bg-[#E05470]" : "bg-[#459e99]";
   const category = categoryMap[item.label] ?? "systems";
+  const projectId = idMap[item.label] ?? "autonomous-drone";
 
   return (
     <article
@@ -114,12 +125,14 @@ function ProjectCard({ item, onOpen }: { item: FocusItem; onOpen: (item: FocusIt
         </div>
 
         {/* SVG project art */}
-        <div className="my-7">
+        <Link href={`/projects/${projectId}`} className="my-7 block">
           <ProjectArt category={category} />
-        </div>
+        </Link>
 
         <div className="mt-auto">
-          <h3 className="display text-3xl leading-none">{item.label}</h3>
+          <Link href={`/projects/${projectId}`} className="hover:text-[#F5A623] transition-colors block">
+            <h3 className="display text-3xl leading-none">{item.label}</h3>
+          </Link>
           <p className="mt-3 max-w-[360px] text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
             {item.description}
           </p>
@@ -135,83 +148,22 @@ function ProjectCard({ item, onOpen }: { item: FocusItem; onOpen: (item: FocusIt
           </div>
         </div>
 
-        <button
-          onClick={() => onOpen(item)}
-          className="group/link mt-7 flex items-center gap-2 self-start text-sm font-semibold"
+        <Link
+          href={`/projects/${projectId}`}
+          className="group/link mt-7 flex items-center gap-2 self-start text-sm font-semibold hover:text-[#F5A623] transition-colors"
         >
-          Read the brief
+          <span>Learn more</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="transition group-hover/link:translate-x-1 group-hover/link:-translate-y-1">
             <path d="M7 17L17 7M17 7H7M17 7v10" />
           </svg>
-        </button>
+        </Link>
       </div>
     </article>
   );
 }
 
-/** Project brief modal */
-function BriefModal({ item, onClose }: { item: FocusItem; onClose: () => void }) {
-  const index = indexMap[item.label] ?? "—";
-  const status = statusMap[item.label] ?? item.period;
-
-  return (
-    <div
-      className="fixed inset-0 z-[60] grid place-items-center p-5 backdrop-blur-sm bg-[hsl(var(--foreground)/0.78)]"
-      role="dialog"
-      aria-modal="true"
-    >
-      <div
-        className="relative max-h-[90dvh] w-full max-w-[650px] overflow-y-auto p-7 sm:p-10 border border-[hsl(var(--foreground))] bg-[hsl(var(--background))] shadow-[18px_18px_0_#F5A623]"
-      >
-        <button
-          onClick={onClose}
-          className="absolute right-5 top-5 grid h-8 w-8 place-items-center transition border border-[hsl(var(--foreground)/0.2)] hover:bg-[hsl(var(--foreground))] hover:text-[hsl(var(--background))]"
-          aria-label="Close"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
-        </button>
-
-        <span className="eyebrow text-[#E05470]">
-          Project brief / {index}
-        </span>
-        <h3 className="display mt-7 max-w-[520px] text-5xl leading-[0.82] sm:text-6xl">{item.label}</h3>
-        <p className="mt-7 text-lg leading-relaxed text-[hsl(var(--muted-foreground))]">
-          {item.description}
-        </p>
-
-        <div className="mt-8 py-5 border-y border-[hsl(var(--foreground)/0.2)]">
-          <p className="eyebrow text-[hsl(var(--muted-foreground))]">Stack</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {item.tags.map((tag) => (
-              <span key={tag} className="mono px-2 py-1 text-[9px] bg-[hsl(var(--muted))]">
-                {tag}
-              </span>
-            ))}
-          </div>
-          <p className="mt-3 text-sm text-[hsl(var(--muted-foreground))]">
-            {status} · {item.period}
-          </p>
-        </div>
-
-        {item.href && (
-          <a
-            href={item.href}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-8 inline-flex items-center gap-2 px-4 py-3 text-sm font-semibold transition bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[#F5A623] hover:text-[#182C30]"
-          >
-            View on GitHub
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
-          </a>
-        )}
-      </div>
-    </div>
-  );
-}
-
 export default function FocusBand() {
   const [filter, setFilter] = useState<Category>("all");
-  const [selected, setSelected] = useState<FocusItem | null>(null);
 
   const visible = filter === "all"
     ? focusItems
@@ -228,40 +180,42 @@ export default function FocusBand() {
   return (
     <section
       id="work"
-      className="scroll-mt-16 px-5 py-24 sm:px-8 lg:px-12 lg:py-36 bg-[hsl(var(--background))]"
+      className="scroll-mt-16 px-5 py-24 sm:px-8 lg:px-12 lg:py-32 bg-[hsl(var(--background))]"
     >
       <div className="mx-auto max-w-[1200px]">
+        {/* Section rule eyebrow */}
         <Reveal>
           <div className="section-rule flex items-center justify-between pt-4">
             <span className="eyebrow">03 / selected work</span>
             <span className="mono text-[10px] text-[hsl(var(--muted-foreground))]">
-              SIX OPEN THREADS
+              SIX ACTIVE THREADS
             </span>
           </div>
         </Reveal>
 
-        <div className="mt-12 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+        {/* Section heading + filter tabs */}
+        <div className="mt-14 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <Reveal>
             <h2
-              className="display max-w-[680px] leading-[0.8]"
-              style={{ fontSize: "clamp(2.8rem, 7vw, 7rem)" }}
+              className="display leading-[0.82]"
+              style={{ fontSize: "clamp(3rem, 7vw, 7.5rem)" }}
             >
               Small systems.<br />
               <em className="text-[#E05470]">Real constraints.</em>
             </h2>
           </Reveal>
 
-          {/* Filter buttons */}
+          {/* Filter pills */}
           <Reveal delay="delay-1">
             <div className="flex flex-wrap gap-2">
               {filters.map(({ label, value }) => (
                 <button
                   key={value}
                   onClick={() => setFilter(value)}
-                  className={`mono px-3 py-2 text-[10px] uppercase transition border ${
+                  className={`mono px-3 py-1 text-xs uppercase tracking-wider transition ${
                     filter === value
-                      ? "border-[hsl(var(--foreground))] bg-[hsl(var(--foreground))] text-[hsl(var(--background))]"
-                      : "border-[hsl(var(--foreground)/0.25)] text-inherit hover:border-[hsl(var(--foreground))]"
+                      ? "bg-[hsl(var(--foreground))] text-[hsl(var(--background))]"
+                      : "border border-[hsl(var(--foreground)/0.2)] bg-transparent hover:border-[hsl(var(--foreground))]"
                   }`}
                 >
                   {label}
@@ -271,44 +225,18 @@ export default function FocusBand() {
           </Reveal>
         </div>
 
-        {/* Project grid */}
-        <div className="mt-16 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {/* Project cards grid */}
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((item, index) => (
             <Reveal
               key={item.label}
-              delay={
-                index % 4 === 0 ? "delay-1"
-                  : index % 4 === 1 ? "delay-2"
-                  : index % 4 === 2 ? "delay-3"
-                  : "delay-4"
-              }
+              delay={index % 3 === 1 ? "delay-1" : index % 3 === 2 ? "delay-2" : ""}
             >
-              <ProjectCard item={item} onOpen={setSelected} />
+              <ProjectCard item={item} />
             </Reveal>
           ))}
         </div>
-
-        <Reveal delay="delay-2">
-          <div
-            className="mt-14 flex flex-col gap-4 pt-5 sm:flex-row sm:items-center sm:justify-between border-t border-[hsl(var(--foreground)/0.2)]"
-          >
-            <span className="mono text-[10px] text-[hsl(var(--muted-foreground))]">
-              More experiments are taking shape in the lab.
-            </span>
-            <a
-              href="https://github.com/HamdanTariq26"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-2 self-start text-sm font-semibold"
-            >
-              Ask for the full project list
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
-            </a>
-          </div>
-        </Reveal>
       </div>
-
-      {selected && <BriefModal item={selected} onClose={() => setSelected(null)} />}
     </section>
   );
 }

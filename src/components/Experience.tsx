@@ -1,28 +1,9 @@
 "use client";
 
-import { experience, outreachActivities } from "@/data/profile";
+import { experience } from "@/data/profile";
 import Reveal from "./Reveal";
 
 export default function Experience() {
-  const timeline = [
-    ...experience.map((item, idx) => ({
-      id: `exp-${idx}-${item.period}`,
-      date: item.period,
-      title: item.organization,
-      role: item.role,
-      copy: item.summary,
-      fileUrl: item.fileUrl,
-    })),
-    ...outreachActivities.map((item, idx) => ({
-      id: `outreach-${item.id || idx}`,
-      date: item.period,
-      title: item.title,
-      role: item.activity,
-      copy: item.summary,
-      fileUrl: item.fileUrl,
-    })),
-  ];
-
   return (
     <section
       id="journey"
@@ -31,9 +12,9 @@ export default function Experience() {
       <div className="mx-auto max-w-[1200px]">
         <Reveal>
           <div className="flex items-center justify-between">
-            <span className="eyebrow">04 / trajectory</span>
+            <span className="eyebrow">04 / trajectory &middot; experience</span>
             <span className="mono text-[10px] text-[hsl(var(--muted-foreground))]">
-              STILL IN PROGRESS
+              PROFESSIONAL &amp; RESEARCH INTERNSHIPS
             </span>
           </div>
         </Reveal>
@@ -51,36 +32,36 @@ export default function Experience() {
               <p
                 className="mt-8 max-w-[390px] text-sm leading-relaxed text-[hsl(var(--muted-foreground))]"
               >
-                The throughline is simple: understand the fundamentals, then test them against the world.
+                Practical engineering and research internships focused on robotics, machine learning, data science, and applied systems.
               </p>
             </div>
           </Reveal>
 
           <Reveal delay="delay-1">
             <div className="border-t border-[hsl(var(--foreground)/0.25)]">
-              {timeline.map(({ id, date, title, role, copy, fileUrl }, index) => (
+              {experience.map((item, index) => (
                 <div
-                  key={id}
+                  key={`exp-${index}-${item.period}`}
                   className="grid gap-4 py-7 sm:grid-cols-[160px_1fr_24px] border-b border-[hsl(var(--foreground)/0.25)]"
                 >
                   <span className="mono text-[10px] text-[#E05470]">
-                    {date}
+                    {item.period}
                   </span>
                   <div>
-                    <h3 className="text-lg font-semibold">{title}</h3>
-                    {role && (
+                    <h3 className="text-lg font-semibold">{item.organization}</h3>
+                    {item.role && (
                       <p className="mono text-[11px] text-[hsl(var(--foreground)/0.7)] mt-0.5">
-                        {role}
+                        {item.role}
                       </p>
                     )}
                     <p
                       className="mt-2 max-w-[540px] text-sm leading-relaxed text-[hsl(var(--muted-foreground))]"
                     >
-                      {copy}
+                      {item.summary}
                     </p>
-                    {fileUrl && (
+                    {item.fileUrl && (
                       <a
-                        href={fileUrl}
+                        href={item.fileUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[hsl(var(--foreground))] hover:text-[#E05470] transition-colors"

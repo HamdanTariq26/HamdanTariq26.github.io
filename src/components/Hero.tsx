@@ -118,7 +118,7 @@ export default function Hero() {
           <Reveal>
             <div className="eyebrow mb-8 flex items-center gap-3 text-[#F5A623]">
               <span className="h-px w-8 bg-[#F5A623]" />
-              AI undergraduate / NUST Balochistan
+              AI undergraduate
             </div>
           </Reveal>
 

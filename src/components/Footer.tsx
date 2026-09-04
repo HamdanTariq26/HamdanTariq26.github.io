@@ -35,7 +35,7 @@ export default function Footer() {
         <div className="mx-auto max-w-[1200px]">
           <Reveal>
             <div className="flex items-center justify-between">
-              <span className="eyebrow text-[#F5A623]">06 / open channel</span>
+              <span className="eyebrow text-[#F5A623]">07 / open channel</span>
               <span className="mono text-[10px] text-[hsl(var(--background)/0.43)]">
                 RESPONSE TIME: 1–3 DAYS
               </span>

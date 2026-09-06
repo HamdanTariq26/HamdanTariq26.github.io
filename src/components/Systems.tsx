@@ -35,7 +35,22 @@ const capabilities = [
   },
 ];
 
-const tools = ["Python", "C++", "PyTorch", "TensorFlow", "OpenCV", "ROS2", "Qt", "Linux", "Git", "ORB-SLAM3", "Arduino"];
+const tools = [
+  "Python",
+  "C++",
+  "PyTorch",
+  "TensorFlow",
+  "LLMs",
+  "RAG",
+  "NLP",
+  "OpenCV",
+  "ROS2",
+  "Qt",
+  "Linux",
+  "Git",
+  "ORB-SLAM3",
+  "Arduino",
+];
 
 export default function Systems() {
   return (
@@ -66,7 +81,16 @@ export default function Systems() {
           className="mt-20 grid gap-px md:grid-cols-3 border border-[hsl(var(--background)/0.21)] bg-[hsl(var(--background)/0.21)]"
         >
           {capabilities.map(({ label, copy, tone, icon }, index) => (
-            <Reveal key={label} delay={index === 0 ? "delay-1" : index === 1 ? "delay-2" : "delay-3"}>
+            <Reveal
+              key={label}
+              delay={
+                index === 0
+                  ? "delay-1"
+                  : index === 1
+                  ? "delay-2"
+                  : "delay-3"
+              }
+            >
               <div
                 className="group relative h-full p-7 transition-colors lg:p-9 bg-[hsl(var(--foreground))] hover:bg-[#152e33]"
               >
@@ -89,7 +113,7 @@ export default function Systems() {
                   {copy}
                 </p>
                 <span
-                  className="absolute bottom-8 right-8 text-[hsl(var(--background)/0.35)] transition group-hover:translate-x-1"
+                  className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 text-[hsl(var(--background)/0.35)] transition group-hover:translate-x-1"
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="1.8">
                     <path d="M7 17L17 7M17 7H7M17 7v10" />

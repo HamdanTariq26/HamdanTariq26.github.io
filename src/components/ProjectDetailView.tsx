@@ -177,32 +177,61 @@ export default function ProjectDetailView({ project }: { project: ProjectDetail 
               </span>
             </div>
 
-            <div className={`mt-6 grid gap-5 ${project.photos.length <= 2 ? "sm:grid-cols-2" : "sm:grid-cols-2"}`}>
-              {project.photos.map((photo, pIdx) => (
-                <button
-                  key={pIdx}
-                  type="button"
-                  onClick={() => setSelectedPhoto(photo)}
-                  className="group relative aspect-[16/10] w-full overflow-hidden border border-[hsl(var(--foreground)/0.2)] bg-[#0f1a1c] text-left transition hover:border-[#F5A623] hover:shadow-[10px_10px_0_rgba(24,44,48,0.08)]"
-                >
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
-                    className="object-contain transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--foreground)/0.85)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
-                    <p className="text-xs text-[hsl(var(--background))] font-medium">
-                      {photo.caption || photo.alt}
-                    </p>
-                    <span className="mono text-[9px] text-[#F5A623] mt-1 inline-flex items-center gap-1">
-                      View full size &rarr;
-                    </span>
-                  </div>
-                </button>
-              ))}
-            </div>
+            {project.id === "project-kisan" ? (
+              <div className={`mt-6 grid gap-5 ${project.photos.length <= 2 ? "sm:grid-cols-2" : "sm:grid-cols-2"}`}>
+                {project.photos.map((photo, pIdx) => (
+                  <button
+                    key={pIdx}
+                    type="button"
+                    onClick={() => setSelectedPhoto(photo)}
+                    className="group relative aspect-[16/10] w-full overflow-hidden border border-[hsl(var(--foreground)/0.2)] bg-[#0f1a1c] text-left transition hover:border-[#F5A623] hover:shadow-[10px_10px_0_rgba(24,44,48,0.08)]"
+                  >
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
+                      className="object-contain transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--foreground)/0.85)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                      <p className="text-xs text-[hsl(var(--background))] font-medium">
+                        {photo.caption || photo.alt}
+                      </p>
+                      <span className="mono text-[9px] text-[#F5A623] mt-1 inline-flex items-center gap-1">
+                        View full size &rarr;
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className={`mt-6 grid gap-5 ${project.photos.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
+                {project.photos.map((photo, pIdx) => (
+                  <button
+                    key={pIdx}
+                    type="button"
+                    onClick={() => setSelectedPhoto(photo)}
+                    className="group relative aspect-[16/11] w-full overflow-hidden border border-[hsl(var(--foreground)/0.2)] bg-[hsl(var(--card))] text-left transition hover:border-[#F5A623] hover:shadow-[10px_10px_0_rgba(24,44,48,0.08)]"
+                  >
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--foreground)/0.8)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                      <p className="text-xs text-[hsl(var(--background))] font-medium">
+                        {photo.caption || photo.alt}
+                      </p>
+                      <span className="mono text-[9px] text-[#F5A623] mt-1 inline-flex items-center gap-1">
+                        View full size &rarr;
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </section>
         )}
 

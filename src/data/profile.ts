@@ -29,6 +29,7 @@ export const profile = {
       "I'm an Artificial Intelligence undergraduate at NUST, focused on building intelligent systems that can perceive, learn, reason, and act.",
     interests: [
       "Artificial Intelligence & Machine Learning",
+      "Natural Language Processing (NLP) & LLMs",
       "Computer Vision & Deep Learning",
       "Robotics & Autonomous Systems",
       "Medical Imaging & Object Detection",
@@ -57,9 +58,9 @@ export const experience: ExperienceItem[] = [
     organization: "Educational Robotics Lab (ER Lab), NUST",
     partner: "International programme with the Eureka Robotics Centre, Cardiff Metropolitan University",
     role: "Intern, Robotics",
-    period: "Jun – Aug 2026 (6 weeks)",
+    period: "Jun – Aug 2026",
     summary:
-      "Completed a 6-week internship at NUST's Educational Robotics Lab as part of an international collaboration with the Eureka Robotics Centre at Cardiff Metropolitan University. Gained exposure to robotics research, engineering practice, and academic collaboration.",
+      "Completed an internship at NUST's Educational Robotics Lab as part of an international collaboration with the Eureka Robotics Centre at Cardiff Metropolitan University. Gained exposure to robotics research, engineering practice, and academic collaboration.",
     supervisors: [
       "Dr. Shadan Khan Khattak — Head of Department, Engineering, Eureka Robotics Centre, Cardiff Met",
       "Dr. Farkhanda Afzal — Project Lead (Pakistan), ER Lab, NUST",

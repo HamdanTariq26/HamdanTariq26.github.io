@@ -47,6 +47,10 @@ export default function ProjectDetailView({ project }: { project: ProjectDetail 
             >
               GitHub Repo &rarr;
             </a>
+          ) : project.repoStatus ? (
+            <span className="hidden items-center gap-2 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[.12em] sm:flex border border-[#F5A623]/60 text-[#F5A623]">
+              {project.repoStatus}
+            </span>
           ) : (
             <a
               href="/cv.pdf"
@@ -149,6 +153,10 @@ export default function ProjectDetailView({ project }: { project: ProjectDetail 
               >
                 GitHub Repository &rarr;
               </a>
+            ) : project.repoStatus ? (
+              <p className="mt-1 text-sm font-semibold text-[#F5A623]">
+                {project.repoStatus}
+              </p>
             ) : (
               <p className="mt-1 text-sm font-semibold text-[hsl(var(--muted-foreground))]">
                 Proprietary / Academic
@@ -169,22 +177,22 @@ export default function ProjectDetailView({ project }: { project: ProjectDetail 
               </span>
             </div>
 
-            <div className={`mt-6 grid gap-5 ${project.photos.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
+            <div className={`mt-6 grid gap-5 ${project.photos.length <= 2 ? "sm:grid-cols-2" : "sm:grid-cols-2"}`}>
               {project.photos.map((photo, pIdx) => (
                 <button
                   key={pIdx}
                   type="button"
                   onClick={() => setSelectedPhoto(photo)}
-                  className="group relative aspect-[16/11] w-full overflow-hidden border border-[hsl(var(--foreground)/0.2)] bg-[hsl(var(--card))] text-left transition hover:border-[#F5A623] hover:shadow-[10px_10px_0_rgba(24,44,48,0.08)]"
+                  className="group relative aspect-[16/10] w-full overflow-hidden border border-[hsl(var(--foreground)/0.2)] bg-[#0f1a1c] text-left transition hover:border-[#F5A623] hover:shadow-[10px_10px_0_rgba(24,44,48,0.08)]"
                 >
                   <Image
                     src={photo.src}
                     alt={photo.alt}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
+                    className="object-contain transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--foreground)/0.8)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--foreground)/0.85)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
                     <p className="text-xs text-[hsl(var(--background))] font-medium">
                       {photo.caption || photo.alt}
                     </p>
@@ -373,8 +381,8 @@ export default function ProjectDetailView({ project }: { project: ProjectDetail 
               </div>
             )}
 
-            {/* Official GitHub Repository Banner Card */}
-            {project.repoUrl && (
+            {/* Official GitHub Repository Banner Card or Open Source In-Progress Notice */}
+            {project.repoUrl ? (
               <div className="mt-12 p-6 sm:p-8 border border-[#F5A623]/40 bg-[hsl(var(--card))]">
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                   <div>
@@ -398,7 +406,26 @@ export default function ProjectDetailView({ project }: { project: ProjectDetail 
                   </a>
                 </div>
               </div>
-            )}
+            ) : project.repoStatus ? (
+              <div className="mt-12 p-6 sm:p-8 border border-[#F5A623]/30 bg-[hsl(var(--card))]">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                  <div>
+                    <span className="mono text-[10px] text-[#F5A623] uppercase tracking-wider font-semibold">
+                      Open Source Project &middot; Codebase
+                    </span>
+                    <h3 className="mt-2 text-lg font-semibold text-[hsl(var(--foreground))]">
+                      Open Source — GitHub Release in Progress
+                    </h3>
+                    <p className="mt-1 text-xs text-[hsl(var(--muted-foreground))]">
+                      This project is open source. The complete codebase, architecture scripts, and setup documentation are currently being finalized for public release on GitHub.
+                    </p>
+                  </div>
+                  <div className="shrink-0 px-3 py-2 border border-[#F5A623]/60 mono text-[10px] font-semibold uppercase tracking-wider text-[#F5A623]">
+                    Coming Soon to GitHub
+                  </div>
+                </div>
+              </div>
+            ) : null}
           </div>
 
           {/* Right Column: Structured Cards (Small char size, neat lists, pipeline) */}

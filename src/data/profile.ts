@@ -152,7 +152,7 @@ export const focusItems: FocusItem[] = [
     label: "Animal Detection System",
     period: "2026",
     description:
-      "Video-based detection across 52 animal classes, combining RT-DETR and YOLO through a mixture-of-experts approach for robust performance across varied conditions.",
+      "An open-source video-based detection pipeline across 52 animal classes, combining RT-DETR and YOLO through a mixture-of-experts approach for robust performance across varied conditions.",
     tags: ["Computer Vision", "RT-DETR", "YOLO", "Python"],
   },
   {
@@ -162,6 +162,13 @@ export const focusItems: FocusItem[] = [
       "A LAN chat and file-transfer application in C++ with a Qt GUI, custom asynchronous UDP transport, peer auto-discovery, and chunked file transfer.",
     tags: ["C++", "Qt", "Networking", "Systems"],
     href: "https://github.com/HamdanTariq26/Chat-Me",
+  },
+  {
+    label: "Project Kisan",
+    period: "2026",
+    description:
+      "An open-source conversational agricultural AI combining dual foundation models (fine-tuned Llama 3.2 3B and Llama 3.1 8B), multi-stage RAG, live web search, and an LLM router engineered specifically to prevent hallucinations and false guidance.",
+    tags: ["Llama 3.2 3B", "Llama 3.1 8B", "QLoRA", "RAG", "FAISS", "FastAPI"],
   },
 ];
 

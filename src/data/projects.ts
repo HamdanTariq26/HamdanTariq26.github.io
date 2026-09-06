@@ -38,6 +38,7 @@ export type ProjectDetail = {
   timeline: string;
   tags: string[];
   repoUrl?: string;
+  repoStatus?: string;
   headline: string;
   // Short 1-liner for card
   description: string;
@@ -623,11 +624,12 @@ ResNet-Encoded U-Net          Conditional DDPM
     subtitle: "Dynamic Per-Frame Expert Routing for Robust Wildlife Video Detection",
     category: "vision",
     categoryLabel: "Computer Vision & Applied Deep Learning",
-    status: "Deployed Experiment",
+    status: "Open Source · Deployed Experiment",
     period: "2026",
     timeline: "2026 · Applied Vision Architecture",
     tags: ["Computer Vision", "RT-DETR-X", "YOLO11m", "Mixture of Experts", "Laplacian Variance Router", "BotSort Tracking", "Python", "Gradio"],
-    headline: "A dual-expert wildlife vision pipeline using real-time Laplacian variance to dynamically route video frames between a Precision Expert and a Kinetic Expert, with BotSort multi-object tracking for persistent animal identity.",
+    repoStatus: "Open Source · Code release in progress",
+    headline: "An open-source dual-expert wildlife vision pipeline using real-time Laplacian variance to dynamically route video frames between a Precision Expert and a Kinetic Expert, with BotSort multi-object tracking for persistent animal identity.",
     description: "Video-based detection across 52 animal classes, combining RT-DETR and YOLO through a mixture-of-experts approach for robust performance across varied conditions.",
     overview: [
       "Wildlife monitoring in natural habitat environments presents extreme visual challenges that a single detection model handles poorly. Clean, well-lit frames with stationary animals are visually simple; frames with fast-moving animals, motion blur, dense foliage occlusion, mist, or low light are visually complex and degraded. The optimal detection architecture for these two regime types is fundamentally different.",
@@ -904,6 +906,269 @@ ResNet-Encoded U-Net          Conditional DDPM
       },
     ],
     accent: "teal",
+  },
+  {
+    id: "project-kisan",
+    index: "07",
+    title: "Project Kisan",
+    subtitle: "AI-Powered Agricultural Assistant",
+    category: "ml",
+    categoryLabel: "AI Research & NLP",
+    status: "Open Source · Research Demo",
+    period: "2026",
+    timeline: "2026",
+    tags: [
+      "Llama 3.2 3B Instruct",
+      "Llama 3.1 8B Instruct",
+      "LoRA / PEFT",
+      "QLoRA (4-bit NF4)",
+      "FAISS",
+      "BGE CrossEncoder",
+      "RAG",
+      "FastAPI",
+      "Gradio",
+      "Qwen3-Embedding-0.6B",
+      "DDGS Web Search",
+    ],
+    repoStatus: "Open Source · Code release in progress",
+    headline:
+      "An open-source hybrid conversational AI combining dual foundation models (fine-tuned Llama 3.2 3B and Llama 3.1 8B), FAISS-based RAG, live web search, and an LLM routing agent engineered to mitigate hallucinations and prevent incorrect agricultural guidance.",
+    description:
+      "Open-source conversational agricultural AI supporting fine-tuned Llama 3.2 3B and Llama 3.1 8B with multi-stage RAG, BGE reranking, live web search, and routing designed to minimize hallucinations and false advice.",
+    overview: [
+      "Project Kisan is an open-source intelligent agricultural assistant built around a hybrid inference architecture. In agricultural decision-making, standard language models frequently hallucinate facts, invent pesticide dosages, or state outdated guidance with unjustified confidence. Rather than relying blindly on unconstrained parametric memory, Project Kisan was designed with multi-layered safeguards to minimize hallucination and avoid incorrect information.",
+      "The system dynamically decides — via an LLM-based routing agent — whether a query can be answered directly, requires retrieval from a curated internal knowledge base, or demands a live web search to verify time-sensitive or external facts. This ensures the model is grounded in relevant evidence rather than forced to guess.",
+      "The inference architecture supports dual foundation models: a fine-tuned Meta Llama 3.2 3B Instruct model for fast, low-latency, and domain-adapted responses, and an optional Meta Llama 3.1 8B Instruct model for situations requiring deeper general reasoning, multi-step explanations, and comprehensive advisory generation.",
+      "For domain adaptation, Llama 3.2 3B was fine-tuned with QLoRA (4-bit NF4, LoRA r=16 α=32) on the kisanVaani/agriculture-qa-english-only dataset using SFTTrainer with a 90/10 train/validation split. Fine-tuning ran to checkpoint-3500 with early stopping and was evaluated against domain validation loss.",
+      "The retrieval pipeline acts as an active hallucination defense: FAISS vector search retrieves an initial candidate pool of 20 documents using Qwen3-Embedding-0.6B, which a BGE CrossEncoder (BAAI/bge-reranker-v2-m3) reranks down to the top 5 with a strict 0.5 minimum score threshold. Noisy, irrelevant passages that often trigger model hallucination are filtered out before reaching the prompt. For timely queries, DDGS discovers 15 live web results across diverse domains, cleaned via BeautifulSoup, and reranked to top 10 passages with domain diversity caps.",
+      "The routing agent outputs a structured JSON tool-call deciding between `direct`, `rag_search`, and `web_search_tool`. When retrieved context is insufficient, the model is instructed to acknowledge uncertainty rather than fabricate unsupported answers. Responses stream token-by-token with transparent source attribution over a FastAPI Server-Sent Events endpoint.",
+    ],
+    problemStatement: {
+      heading: "The Danger of Hallucinations and Incorrect Information in Agriculture",
+      paragraphs: [
+        "In agriculture, incorrect advice carries severe real-world consequences: misdiagnosing a crop pathogen, prescribing incorrect chemical concentrations, or recommending outdated practices can decimate seasonal yields. Unconstrained LLMs frequently hallucinate precise-sounding numbers, dates, and chemicals with false certainty.",
+        "Project Kisan was engineered specifically to address this vulnerability. Rather than claiming infallible accuracy, the system incorporates architectural guardrails at every layer: two-stage neural reranking to eliminate misleading context, live web search for verified external facts, strict anti-hallucination prompting that penalizes fabricated dosages, and uncertainty acknowledgment when data is missing.",
+      ],
+    },
+    deepDiveSections: [
+      {
+        heading: "Dual Foundation Models — Fine-Tuned 3B vs. Configurable 8B",
+        paragraphs: [
+          "Project Kisan implements a configurable foundation model architecture supporting both Meta Llama 3.2 3B Instruct and Meta Llama 3.1 8B Instruct. This design gives users and deployment environments the flexibility to balance computational efficiency against response depth.",
+          "The fine-tuned 3B model (loaded from checkpoint-3500) delivers high-speed, domain-specialized responses with minimal GPU memory footprint, making it ideal for edge deployment, rapid chat turns, and high-throughput advisory environments.",
+          "The 8B model (Meta Llama 3.1 8B Instruct) serves as an alternative high-capacity reasoning engine. It provides superior multi-step logical deduction, nuanced agronomic problem solving, and richer contextual synthesis when handling complex multi-factor queries such as disease interaction with climate conditions.",
+        ],
+      },
+      {
+        heading: "QLoRA Fine-Tuning — Domain Adaptation Pipeline",
+        paragraphs: [
+          "The base model — Llama 3.2 3B Instruct — was fine-tuned using QLoRA: 4-bit NF4 quantisation with double quantisation enabled to reduce memory footprint, combined with LoRA adapters at rank r=16 and scaling α=32 applied to all attention projection layers (q_proj, k_proj, v_proj, o_proj).",
+          "Training used SFTTrainer from the TRL library on the kisanVaani/agriculture-qa-english-only dataset, converted into conversational message structures. The dataset was split 90/10 for training and validation with seed 42. Training ran with batch size 2, gradient accumulation 4 (effective batch size 8), learning rate 2e-4, gradient checkpointing, and an EarlyStoppingCallback (patience 2), converging at checkpoint-3500.",
+          "The fine-tuned adapter was merged back into the base model weights for efficient single-model inference without runtime LoRA overhead.",
+        ],
+      },
+      {
+        heading: "FAISS RAG Pipeline — Two-Stage Retrieval for Hallucination Suppression",
+        paragraphs: [
+          "The RAG path uses Qwen3-Embedding-0.6B to embed both the knowledge base documents and incoming queries into a shared vector space. FAISS performs approximate nearest-neighbour search over the index, retrieving the top k=20 candidate chunks.",
+          "A BGE CrossEncoder (BAAI/bge-reranker-v2-m3) reranker then scores each of the 20 candidates against the original query for semantic relevance, selecting the final top 5 passages with a minimum threshold of 0.5. These are concatenated into a structured context block and injected into the prompt.",
+          "This two-stage design — broad retrieval then neural cross-encoder reranking — is specifically engineered to filter out weakly relevant context. Irrelevant context is one of the primary drivers of hallucinations in generative models; pruning it drastically reduces misleading generation.",
+        ],
+      },
+      {
+        heading: "Web Search System — Live Knowledge Verification & Domain Diversity",
+        paragraphs: [
+          "For queries that require current, externally verifiable information, the web search path uses DDGS (DuckDuckGo Search) to retrieve up to 15 results. The top URLs from diverse domains are fetched and cleaned via BeautifulSoup, extracting readable text from up to 5 pages while stripping scripts, navbars, and boilerplate.",
+          "The extracted passages are chunked (chunk_size=1500, overlap=200) and reranked using the same BGE CrossEncoder, selecting up to 10 ranked web chunks with a cap of 3 chunks per domain. This prevents any single website from dominating the context window and introducing bias.",
+          "To avoid generating incorrect guidance, the model is explicitly prompted to derive answers strictly from provided evidence, refrain from guessing unsupported chemical dosages or timing, and openly state when information is unavailable.",
+        ],
+      },
+      {
+        heading: "LLM Router Agent — Preventing Memory-Only Guesses",
+        paragraphs: [
+          "A lightweight LLM call acts as a meta-reasoning layer. Given the user's query, it outputs a structured JSON tool-call — one of `direct`, `rag_search`, or `web_search_tool` — along with an extracted search sub-query when retrieval is chosen.",
+          "This design prevents the system from guessing from internal weights on factual or volatile subjects. The router identifies the nature of the query: general greetings or conversational prompts are handled directly, while technical agronomic queries and current market/weather events are routed to their respective retrieval pipelines.",
+          "The implementation includes defensive JSON extraction and repairs to normalize malformed responses, dispatching safely to the registered tool executor.",
+        ],
+      },
+      {
+        heading: "Streaming FastAPI Backend — Production Serving & Verifiable Citations",
+        paragraphs: [
+          "The inference backend is built with FastAPI and exposes an SSE (Server-Sent Events) endpoint (`/api/chat/stream`) alongside a standard chat endpoint (`/api/chat`). Token generation from the Llama model is streamed token-by-token using `TextIteratorStreamer` running in a worker thread piped through an `asyncio.Queue`.",
+          "A key transparency feature is source attribution: retrieved document titles, page numbers, and live web URLs are transmitted with the response so users can cross-verify advice rather than treating generated text as unquestioned fact.",
+          "The full stack — embedding, FAISS, reranker, router, dual-model generation, and streaming API — runs as a single integrated service with clean modular boundaries.",
+        ],
+      },
+    ],
+    architectureDiagram: `USER QUERY
+     │
+     ▼
+┌─────────────────────────────┐
+│      LLM ROUTER AGENT       │
+│  (Llama JSON Tool-Call)     │
+│  direct / rag / web_search  │
+└──────┬──────────┬───────────┘
+       │          │            │
+  direct      rag_search   web_search_tool
+       │          │            │
+       │    ┌─────┴──┐   ┌────┴─────┐
+       │    │  FAISS  │   │  DDGS    │
+       │    │ k=20    │   │ 15 URLs  │
+       │    └────┬────┘   └────┬─────┘
+       │         │              │
+       │   BGE CrossEncoder  BGE CrossEncoder
+       │    (top 5 chunks)  (top 10 passages)
+       │         │              │
+       └────┬────┴──────────────┘
+            │    CONTEXT BLOCK
+            ▼
+┌───────────────────────────────────────┐
+│         DUAL MODEL GENERATION         │
+│  • Fine-tuned Llama 3.2 3B (QLoRA)    │
+│    [Fast, specialized, checkpoint-3500]│
+│  • Meta Llama 3.1 8B Instruct         │
+│    [Deep multi-step reasoning & depth] │
+└───────────────────┬───────────────────┘
+                    │ SSE Token Stream
+                    ▼
+              FastAPI Backend
+                    │
+                    ▼
+             Gradio Frontend`,
+    keyFeatures: [
+      {
+        title: "Dual-Model Architecture (3B & 8B)",
+        description:
+          "Configurable inference pipeline supporting both a fast, QLoRA-fine-tuned Llama 3.2 3B for specialized responses, and Meta Llama 3.1 8B Instruct for tasks requiring deeper multi-step reasoning and detailed explanations.",
+      },
+      {
+        title: "LLM Routing Agent",
+        description:
+          "A dedicated LLM call classifies each query and dispatches it — direct answer, RAG retrieval, or live web search — based on structured JSON tool-call output, avoiding brittle keyword heuristics.",
+      },
+      {
+        title: "QLoRA Domain Fine-Tuning",
+        description:
+          "Llama 3.2 3B Instruct fine-tuned with 4-bit NF4 QLoRA (r=16, α=32) on the KisanVaani agricultural corpus using SFTTrainer, converging at checkpoint-3500 with a 90/10 data split.",
+      },
+      {
+        title: "Two-Stage RAG Retrieval",
+        description:
+          "FAISS retrieves the top 20 candidate chunks using Qwen3-Embedding-0.6B, which a BGE CrossEncoder reranker then narrows to the top 5 for precision — maximising recall then filtering for relevance.",
+      },
+      {
+        title: "Live Web Search Integration",
+        description:
+          "DDGS fetches 15 live results; up to 5 pages are scraped and cleaned via BeautifulSoup; BGE reranking selects the top 10 passages with domain diversity caps.",
+      },
+      {
+        title: "SSE Token Streaming & API",
+        description:
+          "FastAPI streams Llama tokens over Server-Sent Events via TextIteratorStreamer and asyncio.Queue, delivering a responsive chat experience with real-time source attribution.",
+      },
+      {
+        title: "Hallucination Defense & Guardrails",
+        description:
+          "Rather than assuming generative infallibility, the architecture incorporates multi-layered guardrails: neural CrossEncoder relevance filtering (threshold >= 0.5), uncertainty acknowledgment prompts, domain diversity caps, and explicit constraints against fabricating dosages.",
+      },
+    ],
+    phases: [
+      {
+        step: "01",
+        title: "Data Preparation",
+        description:
+          "kisanVaani agricultural QA dataset loaded and converted into conversational instruction templates. 90/10 train/validation split applied with fixed seed 42. PDF documents chunked and indexed in FAISS with Qwen3-Embedding-0.6B.",
+      },
+      {
+        step: "02",
+        title: "QLoRA Fine-Tuning",
+        description:
+          "Llama 3.2 3B Instruct quantised to 4-bit NF4 with double quantisation and BF16 computation. LoRA adapters (r=16, α=32) trained on attention projections via SFTTrainer with gradient checkpointing, selecting checkpoint-3500 via early stopping.",
+      },
+      {
+        step: "03",
+        title: "Dual-Model Inference Setup",
+        description:
+          "Integrated both the fine-tuned Llama 3.2 3B model for fast domain-specific answering and Meta Llama 3.1 8B Instruct for enhanced general reasoning, configurable based on query complexity.",
+      },
+      {
+        step: "04",
+        title: "RAG & Web Retrieval Modules",
+        description:
+          "FAISS vector store and BGE CrossEncoder (bge-reranker-v2-m3) assembled for two-stage document retrieval. DDGS web search with BeautifulSoup parsing and domain diversity caps implemented.",
+      },
+      {
+        step: "05",
+        title: "Router Agent & Backend",
+        description:
+          "LLM routing agent built to classify queries into direct, rag_search, or web_search_tool via JSON tool-calls. FastAPI SSE streaming backend assembled with asynchronous event queues and source attribution.",
+      },
+      {
+        step: "06",
+        title: "Frontend & Deployment",
+        description:
+          "Gradio frontend built for multi-turn conversation, source citation display, and routing-path inspection. Hosted in a GPU environment with ngrok secure tunnels and Kaggle Secrets credential management.",
+      },
+    ],
+    metrics: [
+      {
+        label: "Foundation Models",
+        value: "3B Fine-Tuned + 8B",
+        detail: "Llama 3.2 3B (domain adapted) & Llama 3.1 8B (deep reasoning)",
+      },
+      {
+        label: "LoRA Config",
+        value: "r=16 / α=32",
+        detail: "4-bit NF4 quantisation, double quantisation, BF16 compute",
+      },
+      {
+        label: "Fine-Tune Checkpoint",
+        value: "Step 3500",
+        detail: "90 / 10 split on KisanVaani dataset with early stopping",
+      },
+      {
+        label: "FAISS Recall",
+        value: "top k=20",
+        detail: "Narrowed to top 5 by BGE CrossEncoder reranker (>=0.5 score)",
+      },
+      {
+        label: "Web Search",
+        value: "15 results",
+        detail: "5 diverse sites scraped → BGE reranked → top 10 passages",
+      },
+      {
+        label: "Routing Paths",
+        value: "3 paths",
+        detail: "direct / rag_search / web_search_tool via JSON tool-call",
+      },
+    ],
+    photos: [
+      {
+        src: "/images/projects/project-kisan/frontend.png",
+        alt: "Project Kisan Gradio frontend interface",
+        caption:
+          "Gradio-based conversational frontend showing multi-turn chat, routing status, and live source attribution citations",
+      },
+      {
+        src: "/images/projects/project-kisan/fine-tuned-model.png",
+        alt: "Fine-tuned Llama 3.2 3B model output",
+        caption:
+          "Fine-tuned Llama 3.2 3B model (checkpoint-3500) answering agricultural disease queries with grounded web source citations",
+      },
+      {
+        src: "/images/projects/project-kisan/8b-model.png",
+        alt: "Meta Llama 3.1 8B Instruct inference evaluation",
+        caption:
+          "Meta Llama 3.1 8B Instruct running inside the Project Kisan interface, providing detailed multi-step reasoning and structured management strategies",
+      },
+      {
+        src: "/images/projects/project-kisan/tool-execution-code.png",
+        alt: "LLM router agent tool execution code",
+        caption:
+          "Router agent JSON tool-call dispatch logic — classifying queries into direct, rag_search, or web_search_tool paths with defensive parsing",
+      },
+    ],
+    accent: "gold",
   },
 ];
 

@@ -14,6 +14,7 @@ const idMap: Record<string, string> = {
   "Gesture-Controlled Robotic Hand": "robotic-hand",
   "Animal Detection System": "animal-detection",
   "Chat-Me": "chat-me",
+  "Project Kisan": "project-kisan",
 };
 
 const categoryMap: Record<string, Category> = {
@@ -23,6 +24,7 @@ const categoryMap: Record<string, Category> = {
   "Gesture-Controlled Robotic Hand": "robotics",
   "Animal Detection System": "vision",
   "Chat-Me": "systems",
+  "Project Kisan": "ml",
 };
 
 const indexMap: Record<string, string> = {
@@ -32,6 +34,7 @@ const indexMap: Record<string, string> = {
   "Gesture-Controlled Robotic Hand": "04",
   "Animal Detection System": "05",
   "Chat-Me": "06",
+  "Project Kisan": "07",
 };
 
 const accentMap: Record<string, "gold" | "rose" | "teal"> = {
@@ -41,6 +44,7 @@ const accentMap: Record<string, "gold" | "rose" | "teal"> = {
   "Gesture-Controlled Robotic Hand": "gold",
   "Animal Detection System": "rose",
   "Chat-Me": "teal",
+  "Project Kisan": "gold",
 };
 
 const statusMap: Record<string, string> = {
@@ -48,8 +52,9 @@ const statusMap: Record<string, string> = {
   "Conditional Multimodal MRI Synthesis & Brain Tumor Segmentation": "Model study",
   "Gesture-Controlled Drone": "Interactive prototype",
   "Gesture-Controlled Robotic Hand": "Hardware prototype",
-  "Animal Detection System": "Deployed experiment",
+  "Animal Detection System": "Open source · Deployed",
   "Chat-Me": "Complete",
+  "Project Kisan": "Open source · Research demo",
 };
 
 /** Inline SVG art for each project category */

@@ -155,6 +155,7 @@ export const focusItems: FocusItem[] = [
     description:
       "An open-source video-based detection pipeline across 52 animal classes, combining RT-DETR and YOLO through a mixture-of-experts approach for robust performance across varied conditions.",
     tags: ["Computer Vision", "RT-DETR", "YOLO", "Python"],
+    href: "https://github.com/HamdanTariq26/Animal-Detection-System",
   },
   {
     label: "Chat-Me",
@@ -170,6 +171,7 @@ export const focusItems: FocusItem[] = [
     description:
       "An open-source conversational agricultural AI combining dual foundation models (fine-tuned Llama 3.2 3B and Llama 3.1 8B), multi-stage RAG, live web search, and an LLM router engineered specifically to prevent hallucinations and false guidance.",
     tags: ["Llama 3.2 3B", "Llama 3.1 8B", "QLoRA", "RAG", "FAISS", "FastAPI"],
+    href: "https://github.com/HamdanTariq26/Project-Kisan",
   },
 ];
 

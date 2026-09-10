@@ -628,7 +628,7 @@ ResNet-Encoded U-Net          Conditional DDPM
     period: "2026",
     timeline: "2026 · Applied Vision Architecture",
     tags: ["Computer Vision", "RT-DETR-X", "YOLO11m", "Mixture of Experts", "Laplacian Variance Router", "BotSort Tracking", "Python", "Gradio"],
-    repoStatus: "Open Source · Code release in progress",
+    repoUrl: "https://github.com/HamdanTariq26/Animal-Detection-System",
     headline: "An open-source dual-expert wildlife vision pipeline using real-time Laplacian variance to dynamically route video frames between a Precision Expert and a Kinetic Expert, with BotSort multi-object tracking for persistent animal identity.",
     description: "Video-based detection across 52 animal classes, combining RT-DETR and YOLO through a mixture-of-experts approach for robust performance across varied conditions.",
     overview: [
@@ -930,7 +930,7 @@ ResNet-Encoded U-Net          Conditional DDPM
       "Qwen3-Embedding-0.6B",
       "DDGS Web Search",
     ],
-    repoStatus: "Open Source · Code release in progress",
+    repoUrl: "https://github.com/HamdanTariq26/Project-Kisan",
     headline:
       "An open-source hybrid conversational AI combining dual foundation models (fine-tuned Llama 3.2 3B and Llama 3.1 8B), FAISS-based RAG, live web search, and an LLM routing agent engineered to mitigate hallucinations and prevent incorrect agricultural guidance.",
     description:
